@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Marine Species Identification Platform - OCERA</title>
+    <meta name="description" content="AI-powered marine species identification platform with advanced image analysis">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Ocean-inspired Color Palette */
+            --primary-color: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --secondary-color: #0891b2;
+            --secondary-light: #0ea5e9;
+            --secondary-dark: #0c4a6e;
+
+            /* Accent Colors */
+            --accent-blue: #06b6d4;
+            --accent-teal: #14b8a6;
+            --accent-green: #10b981;
+
+            /* Neutral Colors */
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --gray: #64748b;
+            --dark-gray: #334155;
+            --black: #0f172a;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            --gradient-ocean: linear-gradient(135deg, #1e40af 0%, #0891b2 50%, #14b8a6 100%);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --h1-size: 3.5rem;
+            --h2-size: 2.5rem;
+            --h3-size: 2rem;
+            --h4-size: 1.5rem;
+            --normal-size: 1rem;
+            --small-size: 0.875rem;
+            --smaller-size: 0.75rem;
+
+            /* Font Weights */
+            --font-light: 300;
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 6rem;
+
+            /* Shadows - Dark Mode Default */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 50%;
+
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-normal: 300ms ease;
+            --transition-slow: 500ms ease;
+
+            /* Z-index */
+            --z-tooltip: 10;
+            --z-fixed: 100;
+            --z-modal: 1000;
+
+            /* Container */
+            --container-width: 1200px;
+            --container-padding: 1rem;
+
+            /* Header Height */
+            --header-height: 4rem;
+
+            /* Theme Colors - Default Dark Mode */
+            --bg-color: var(--black);
+            --text-color: var(--white);
+            --text-secondary: #94a3b8;
+            --surface-color: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --video-overlay: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Light Mode Variables */
+        [data-theme="light"] {
+            --bg-color: var(--white);
+            --text-color: var(--black);
+            --text-secondary: var(--gray);
+            --surface-color: var(--white);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --video-overlay: rgba(30, 64, 175, 0.7);
+
+            /* Light Mode Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--normal-size);
+            font-weight: var(--font-normal);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 320px;
+            min-height: 100vh;
+            padding-top: var(--header-height);
+            position: relative;
+        }
+
+        /* ===== BACKGROUND VIDEO ===== */
+        .hero__video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero__overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--video-overlay);
+            z-index: -1;
+            transition: background var(--transition-normal);
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            padding: var(--spacing-3xl) 0;
+        }
+
+        .section__header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .section__title {
+            font-size: var(--h2-size);
+            font-weight: var(--font-bold);
+            color: var(--white);
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .section__description {
+            font-size: 1.1rem;
+            color: var(--white);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            opacity: 0.9;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff 0%, #00b4d8 25%, #0077b6 50%, #023e8a 75%, #03045e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: var(--font-bold);
+            text-shadow: none;
+        }
+
+        /* Bright gradient for light mode visibility */
+        [data-theme="light"] .gradient-text {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #ffd23f 50%, #06ffa5 75%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Fallback for browsers that don't support background-clip */
+        @supports not (-webkit-background-clip: text) {
+            .gradient-text {
+                color: #00b4d8;
+                background: none;
+                -webkit-text-fill-color: initial;
+            }
+
+            [data-theme="light"] .gradient-text {
+                color: #f7931e;
+            }
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: var(--z-fixed);
+            border-bottom: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+
+        [data-theme="light"] .header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav {
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav__logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 1.25rem;
+            font-weight: var(--font-bold);
+            color: var(--primary-color);
+        }
+
+        .nav__logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+            margin: 0;
+        }
+
+        .nav__link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: var(--font-medium);
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav__link:hover,
+        .nav__link.active-link {
+            color: var(--primary-color);
+        }
+
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width var(--transition-normal);
+        }
+
+        .nav__link:hover::after,
+        .nav__link.active-link::after {
+            width: 100%;
+        }
+
+        .nav__actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
+            transform: scale(1.1);
+        }
+
+        .nav__toggle {
+            display: none;
+            width: 48px;
+            height: 48px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            position: relative;
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-normal);
+            z-index: 1002;
+            box-shadow: var(--shadow-sm);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .nav__toggle:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .nav__toggle:hover span {
+            background: var(--white);
+        }
+
+        .nav__toggle span {
+            display: block;
+            width: 22px;
+            height: 3px;
+            background: var(--text-color);
+            transition: all var(--transition-normal);
+            border-radius: 2px;
+            transform-origin: center;
+        }
+
+        .nav__toggle.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .nav__toggle.active span {
+            background: var(--white);
+        }
+
+        .nav__toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(0, 7px);
+        }
+
+        .nav__toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .nav__toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(0, -7px);
+        }
+
+        .nav__close {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: var(--surface-color);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav__close:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: rotate(90deg) scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        .nav__menu {
+            display: flex;
+            align-items: center;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-medium);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            font-size: var(--normal-size);
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-primary);
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+            font-weight: var(--font-semibold);
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn--secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn--secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .top-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .upload-section {
+            min-height: 500px;
+        }
+
+        .chat-section {
+            min-height: 500px;
+        }
+
+        .results-section {
+            grid-column: 1 / -1;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .card h2 {
+            color: var(--text-color);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--h4-size);
+            font-weight: var(--font-semibold);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .card h2 i {
+            color: var(--primary-color);
+        }
+
+        .upload-area {
+            border: 3px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+
+
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .message {
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            line-height: 1.6;
+        }
+
+        .user-message {
+            background: var(--gradient-primary);
+            color: var(--white);
+            margin-left: 20%;
+        }
+
+        .bot-message {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            margin-right: 20%;
+            color: var(--text-color);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: var(--normal-size);
+            background: var(--surface-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .results-section {
+            grid-column: 1 / -1;
+        }
+
+
+        .result-item {
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .result-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+        }
+
+        .result-info h3 {
+            color: var(--text-color);
+            margin-bottom: var(--spacing-xs);
+            font-weight: var(--font-semibold);
+        }
+
+        .result-info p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .scientific-name {
+            font-style: italic;
+            color: var(--primary-color);
+            font-weight: var(--font-semibold);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+
+        .spinner {
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-sm) 0;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-sm) 0;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .config-card {
+            background: rgba(255, 195, 0, 0.1);
+            border-left: 4px solid #ffc107;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .config-input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--surface-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+        }
+
+        .config-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* ===== SETTINGS SECTION ===== */
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .api-config-section {
+            transition: all var(--transition-normal);
+        }
+
+        .api-status {
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .api-status.connected {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .api-status.disconnected {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .api-status.testing {
+            background: rgba(255, 195, 0, 0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255, 195, 0, 0.2);
+        }
+
+        .theme-option {
+            transition: all var(--transition-normal);
+        }
+
+        .theme-option.active {
+            background: var(--gradient-primary) !important;
+            color: var(--white) !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        /* ===== MOBILE RESPONSIVE DESIGN ===== */
+        @media screen and (max-width: 1024px) {
+            .container {
+                padding: 0 var(--spacing-lg);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            :root {
+                --h1-size: 2.8rem;
+                --h2-size: 2.2rem;
+                --h3-size: 1.8rem;
+                --h4-size: 1.4rem;
+                --spacing-3xl: 4rem;
+                --spacing-2xl: 3rem;
+                --spacing-xl: 2.5rem;
+            }
+
+            .container {
+                padding: 0 clamp(1rem, 4vw, 2rem);
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .section {
+                padding: var(--spacing-2xl) 0;
+            }
+
+            .nav__actions {
+                gap: var(--spacing-sm);
+            }
+
+            .theme-toggle {
+                padding: var(--spacing-sm);
+                font-size: 1.1rem;
+            }
+
+            .nav__menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-color);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: left var(--transition-normal);
+                z-index: 1001;
+                border-right: 1px solid var(--border-color);
+            }
+
+            .nav__menu.show-menu {
+                left: 0;
+            }
+
+            .nav__list {
+                flex-direction: column;
+                gap: var(--spacing-xl);
+                text-align: center;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .nav__link {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: var(--spacing-md);
+                font-size: 1.2rem;
+                padding: var(--spacing-lg) var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                transition: all var(--transition-normal);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border-color);
+                width: 100%;
+                text-align: left;
+            }
+
+            .nav__link i {
+                font-size: 1.3rem;
+                width: 24px;
+                text-align: center;
+                color: var(--primary-color);
+            }
+
+            .nav__link span {
+                font-weight: var(--font-medium);
+            }
+
+            .nav__link:hover {
+                background: var(--border-color);
+            }
+
+            .nav__close {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                font-size: 1.2rem;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1002;
+            }
+
+            .nav__toggle {
+                display: flex !important;
+                position: relative;
+                z-index: 1003;
+                pointer-events: auto;
+            }
+
+            .nav__close {
+                display: flex;
+            }
+
+            .top-row {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .upload-section,
+            .chat-section {
+                min-height: 400px;
+            }
+
+            .result-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .section__title {
+                font-size: clamp(1.8rem, 5vw, 2.2rem);
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .message {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+
+            .card {
+                padding: var(--spacing-lg);
+            }
+
+            .upload-area {
+                padding: var(--spacing-xl);
+            }
+
+            .btn {
+                padding: var(--spacing-sm) var(--spacing-md);
+                min-width: 100px;
+            }
+
+            .upload-section,
+            .chat-section {
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video class="hero__video" autoplay muted loop>
+        <source src="assets/bgs.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="hero__overlay"></div>
+
+    <!-- Header and Navigation -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OCERA Marine</span>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#platform" class="nav__link active-link">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Platform</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#results" class="nav__link">
+                            <i class="fas fa-search"></i>
+                            <span>Results</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#config" class="nav__link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="section__header">
+            <h1 class="section__title">
+                <span class="gradient-text">Marine Species</span> Identification Platform
+            </h1>
+            <p class="section__description">
+                Upload marine life images for AI-powered species identification and chat with Aqua, your marine biology
+                assistant
+            </p>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="card" id="config" style="display: none;">
+            <h2><i class="fas fa-cog"></i> Settings</h2>
+
+            <!-- API Configuration -->
+            <div style="margin-bottom: var(--spacing-xl);">
+                <h3
+                    style="color: var(--text-color); margin-bottom: var(--spacing-md); font-size: 1.2rem; display: flex; align-items: center; gap: var(--spacing-sm);">
+                    <i class="fas fa-key" style="color: var(--primary-color);"></i>
+                    API Configuration
+                </h3>
+                <p style="margin-bottom: var(--spacing-md); color: var(--text-secondary);">Configure your Google Gemini
+                    API key to enable AI-powered species identification and chat features:</p>
+
+                <div class="api-config-section"
+                    style="background: rgba(255, 255, 255, 0.02); padding: var(--spacing-lg); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+                    <div
+                        style="display: flex; gap: var(--spacing-sm); align-items: center; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key..."
+                            class="config-input" style="min-width: 300px;">
+                        <button class="btn" onclick="setApiKey()">
+                            <i class="fas fa-save"></i> Save Key
+                        </button>
+                        <button class="btn btn--secondary" onclick="toggleApiKeyVisibility()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+
+                    <div
+                        style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                        <input type="checkbox" id="rememberApiKey" checked style="margin: 0;">
+                        <label for="rememberApiKey"
+                            style="color: var(--text-secondary); font-size: var(--small-size); cursor: pointer;">
+                            <i class="fas fa-shield-alt" style="color: var(--primary-color); margin-right: 4px;"></i>
+                            Remember API key securely (recommended)
+                        </label>
+                    </div>
+
+                    <div id="apiKeyStatus" style="margin-bottom: var(--spacing-md);"></div>
+
+                    <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                        <button class="btn btn--secondary" onclick="testApiKey()" id="testApiBtn">
+                            <i class="fas fa-vial"></i> Test Connection
+                        </button>
+                        <button class="btn btn--secondary" onclick="checkStorageHealth()">
+                            <i class="fas fa-stethoscope"></i> Check Storage
+                        </button>
+                        <button class="btn btn--secondary" onclick="clearApiKey()"
+                            style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                            <i class="fas fa-trash"></i> Clear Key
+                        </button>
+                    </div>
+
+                    <div id="storageHealth"
+                        style="margin-top: var(--spacing-md); font-size: var(--small-size); color: var(--text-secondary);">
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(59, 130, 246, 0.1); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color);">
+                    <p
+                        style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: var(--spacing-xs);">
+                        <i class="fas fa-info-circle"
+                            style="color: var(--primary-color); margin-right: var(--spacing-xs);"></i>
+                        <strong>How to get your API key:</strong>
+                    </p>
+                    <ol
+                        style="font-size: var(--small-size); color: var(--text-secondary); margin-left: var(--spacing-lg);">
+                        <li>Visit <a href="https://makersuite.google.com/app/apikey" target="_blank"
+                                style="color: var(--primary-color);">Google AI Studio</a></li>
+                        <li>Sign in with your Google account</li>
+                        <li>Click "Create API Key" and select a project</li>
+                        <li>Copy the generated key and paste it above</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Theme Settings -->
+            <div style="margin-bottom: var(--spacing-xl);">
+                <h3
+                    style="color: var(--text-color); margin-bottom: var(--spacing-md); font-size: 1.2rem; display: flex; align-items: center; gap: var(--spacing-sm);">
+                    <i class="fas fa-palette" style="color: var(--primary-color);"></i>
+                    Appearance
+                </h3>
+                <div
+                    style="background: rgba(255, 255, 255, 0.02); padding: var(--spacing-lg); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+                    <p style="margin-bottom: var(--spacing-md); color: var(--text-secondary);">Choose your preferred
+                        theme:</p>
+                    <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                        <button class="btn btn--secondary" onclick="setTheme('dark')" id="darkThemeBtn">
+                            <i class="fas fa-moon"></i> Dark Mode
+                        </button>
+                        <button class="btn btn--secondary" onclick="setTheme('light')" id="lightThemeBtn">
+                            <i class="fas fa-sun"></i> Light Mode
+                        </button>
+                        <button class="btn btn--secondary" onclick="setTheme('auto')" id="autoThemeBtn">
+                            <i class="fas fa-adjust"></i> Auto
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Data Management -->
+            <div>
+                <h3
+                    style="color: var(--text-color); margin-bottom: var(--spacing-md); font-size: 1.2rem; display: flex; align-items: center; gap: var(--spacing-sm);">
+                    <i class="fas fa-database" style="color: var(--primary-color);"></i>
+                    Data Management
+                </h3>
+                <div
+                    style="background: rgba(255, 255, 255, 0.02); padding: var(--spacing-lg); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+                    <p style="margin-bottom: var(--spacing-md); color: var(--text-secondary);">Manage your stored data
+                        and chat history:</p>
+                    <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                        <button class="btn btn--secondary" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn--secondary" onclick="exportApiKey()">
+                            <i class="fas fa-key"></i> Export API Key
+                        </button>
+                        <button class="btn btn--secondary" onclick="importApiKey()">
+                            <i class="fas fa-upload"></i> Import API Key
+                        </button>
+                        <button class="btn btn--secondary" onclick="clearChatHistory()"
+                            style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                            <i class="fas fa-comments"></i> Clear Chat History
+                        </button>
+                        <button class="btn btn--secondary" onclick="clearIdentifications()"
+                            style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                            <i class="fas fa-images"></i> Clear Identifications
+                        </button>
+                    </div>
+
+                    <input type="file" id="apiKeyImportInput" accept=".json,.txt" style="display: none;"
+                        onchange="handleApiKeyImport(event)">
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content" id="platform">
+            <!-- Top Row: Upload and Chat Side by Side -->
+            <div class="top-row">
+                <!-- Image Upload Section -->
+                <div class="card upload-section" id="upload">
+                    <h2><i class="fas fa-upload"></i> Upload & Analyze Marine Images</h2>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon"><i class="fas fa-fish"></i></div>
+                        <p style="color: var(--text-secondary); margin-bottom: var(--spacing-md);">Drag and drop an
+                            image
+                            here or click to select</p>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        <button class="btn" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-folder-open"></i> Choose File
+                        </button>
+                    </div>
+
+                    <div class="loading" id="uploadLoading">
+                        <div class="spinner"></div>
+                        <p style="color: var(--text-secondary);">Analyzing marine species...</p>
+                    </div>
+
+                    <div id="uploadMessage"></div>
+                </div>
+
+                <!-- Chat Section -->
+                <div class="card chat-section" id="chat">
+                    <h2><i class="fas fa-comments"></i> Chat with Aqua Assistant</h2>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message bot-message">
+                                <strong>Aqua:</strong> Hello! I'm Aqua, your marine biology assistant. Ask me anything
+                                about
+                                marine life, ocean ecosystems, or species identification!
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" id="chatInput" class="chat-input" placeholder="Ask about marine life..."
+                                maxlength="1000">
+                            <button class="btn" id="sendBtn" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Results Section -->
+            <div class="card results-section" id="results">
+                <h2><i class="fas fa-search"></i> Recent Identifications</h2>
+                <div id="resultsContainer">
+                    <p style="text-align: center; color: var(--text-secondary); padding: var(--spacing-2xl);">
+                        Upload an image to see species identification results here
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let navMenu, navToggle, navClose, header;
+
+        // Configuration with enhanced persistence
+        let GEMINI_API_KEY = '';
+        let GEMINI_API_URL = '';
+
+        // Local storage for data persistence
+        const STORAGE_KEYS = {
+            identifications: 'marine_identifications',
+            chatHistory: 'marine_chat_history',
+            apiKey: 'gemini_api_key',
+            apiKeyBackup: 'gemini_api_key_backup',
+            apiKeySession: 'gemini_api_key_session'
+        };
+
+        // Enhanced API key retrieval with multiple fallbacks
+        function getStoredApiKey() {
+            // Try localStorage first
+            let key = localStorage.getItem(STORAGE_KEYS.apiKey);
+            if (key) return key;
+
+            // Try backup storage
+            key = localStorage.getItem(STORAGE_KEYS.apiKeyBackup);
+            if (key) {
+                // Restore primary key
+                localStorage.setItem(STORAGE_KEYS.apiKey, key);
+                return key;
+            }
+
+            // Try sessionStorage as last resort
+            key = sessionStorage.getItem(STORAGE_KEYS.apiKeySession);
+            if (key) {
+                // Restore to localStorage
+                localStorage.setItem(STORAGE_KEYS.apiKey, key);
+                localStorage.setItem(STORAGE_KEYS.apiKeyBackup, key);
+                return key;
+            }
+
+            return '';
+        }
+
+        // Enhanced API key storage with multiple backups
+        function storeApiKey(key) {
+            if (!key) return;
+
+            try {
+                // Store in multiple locations for redundancy
+                localStorage.setItem(STORAGE_KEYS.apiKey, key);
+                localStorage.setItem(STORAGE_KEYS.apiKeyBackup, key);
+                sessionStorage.setItem(STORAGE_KEYS.apiKeySession, key);
+
+                // Also store with timestamp for verification
+                const keyData = {
+                    key: key,
+                    timestamp: Date.now(),
+                    version: '1.0'
+                };
+                localStorage.setItem('marine_api_config', JSON.stringify(keyData));
+
+                console.log('✅ API key stored successfully with backups');
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to store API key:', error);
+                return false;
+            }
+        }
+
+        // Initialize API key on load
+        GEMINI_API_KEY = getStoredApiKey();
+
+        // ===== NAVIGATION FUNCTIONS =====
+        function showSection(sectionId) {
+            // Hide settings if visible
+            const configSection = document.getElementById('config');
+            if (configSection) {
+                configSection.style.display = 'none';
+            }
+
+            // Show the main platform content (which includes results)
+            const mainContent = document.getElementById('platform');
+            if (mainContent) {
+                mainContent.style.display = 'block';
+            }
+
+            // Handle scrolling to specific sections within the platform
+            if (sectionId === 'results') {
+                const resultsSection = document.getElementById('results');
+                if (resultsSection) {
+                    setTimeout(() => {
+                        const offsetTop = resultsSection.offsetTop - 70;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }, 100); // Small delay to ensure platform is visible
+                }
+            } else if (sectionId === 'platform') {
+                // Scroll to top for platform
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+
+            // Update navigation active states
+            document.querySelectorAll('.nav__link').forEach(link => {
+                link.classList.remove('active-link');
+            });
+
+            const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active-link');
+            }
+        }
+
+
+
+        // ===== DOM CONTENT LOADED =====
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize all components
+            initNavigation();
+            initThemeToggle();
+            initializeApp();
+            loadRecentIdentifications();
+
+            // Auto-restore API key and validate
+            autoRestoreApiKey();
+
+            // Setup navigation
+            setupNavigation();
+
+            console.log('🌊 Marine Platform initialized successfully!');
+        });
+
+        function setupNavigation() {
+            // Add click event listeners to navigation links
+            document.querySelectorAll('.nav__link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    const sectionId = href.substring(1); // Remove the #
+
+                    if (sectionId === 'config') {
+                        showSettings();
+                    } else {
+                        showSection(sectionId);
+                    }
+
+                    // Close mobile menu if open
+                    const navMenu = document.getElementById('nav-menu');
+                    const navToggle = document.getElementById('nav-toggle');
+                    if (navMenu && navMenu.classList.contains('show-menu')) {
+                        navMenu.classList.remove('show-menu');
+                        navToggle.classList.remove('active');
+                    }
+                });
+            });
+
+            // Show platform section by default (this is our "home")
+            showSection('platform');
+        }
+
+        // Auto-restore API key function
+        function autoRestoreApiKey() {
+            const storedKey = getStoredApiKey();
+            if (storedKey) {
+                GEMINI_API_KEY = storedKey;
+                GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+
+                // Update UI if on settings page
+                const apiKeyInput = document.getElementById('apiKeyInput');
+                if (apiKeyInput) {
+                    apiKeyInput.value = '••••••••••••••••••••••••••••••••••••••••';
+                }
+
+                console.log('✅ API key auto-restored from storage');
+
+                // Silently test the key in background
+                setTimeout(() => {
+                    testApiKeySilently();
+                }, 2000);
+            } else {
+                console.log('ℹ️ No stored API key found');
+            }
+        }
+
+        // Silent API key test (doesn't show UI messages)
+        async function testApiKeySilently() {
+            if (!GEMINI_API_KEY) return;
+
+            try {
+                const payload = {
+                    contents: [{ parts: [{ text: "Test" }] }]
+                };
+
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    console.log('✅ API key validated successfully');
+                } else {
+                    console.warn('⚠️ API key validation failed - key may be invalid');
+                    // Don't clear the key automatically, let user decide
+                }
+            } catch (error) {
+                console.warn('⚠️ API key validation error:', error.message);
+            }
+        }
+
+        // ===== NAVIGATION FUNCTIONALITY =====
+        function initNavigation() {
+            navMenu = document.getElementById('nav-menu');
+            navToggle = document.getElementById('nav-toggle');
+            navClose = document.getElementById('nav-close');
+            header = document.getElementById('header');
+
+            // Mobile menu toggle with hamburger animation
+            if (navToggle) {
+                navToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const isMenuOpen = navMenu.classList.contains('show-menu');
+
+                    if (isMenuOpen) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                });
+            }
+
+            // Mobile menu close
+            if (navClose) {
+                navClose.addEventListener('click', () => {
+                    closeMenu();
+                });
+            }
+
+            // Close menu when clicking on links with smooth scroll
+            const navLinks = document.querySelectorAll('.nav__link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+
+                    // Handle smooth scrolling for anchor links
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+
+                        // Update active link immediately
+                        updateActiveLink(link, navLinks);
+                        closeMenu();
+
+                        // Handle special navigation cases
+                        if (targetId === 'config') {
+                            showSettings();
+                        } else {
+                            showSection(targetId);
+                        }
+                    } else {
+                        closeMenu();
+                    }
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navMenu.classList.contains('show-menu') &&
+                    !navMenu.contains(e.target) &&
+                    !navToggle.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+
+            // Helper functions for menu control
+            function openMenu() {
+                navMenu.classList.add('show-menu');
+                navToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                navMenu.classList.remove('show-menu');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'visible';
+            }
+
+            function updateActiveLink(activeLink, allNavLinks) {
+                allNavLinks.forEach(link => link.classList.remove('active-link'));
+                activeLink.classList.add('active-link');
+            }
+        }
+
+        // ===== THEME TOGGLE FUNCTIONALITY =====
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or default to dark mode
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+
+            // Update icon based on current theme
+            updateThemeIcon(currentTheme, themeIcon);
+
+            // Theme toggle event listener
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme, themeIcon);
+
+                // Add smooth transition effect
+                document.body.style.transition = 'all 0.3s ease';
+                setTimeout(() => {
+                    document.body.style.transition = '';
+                }, 300);
+            });
+        }
+
+        function updateThemeIcon(theme, icon) {
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        // ===== SETTINGS MANAGEMENT =====
+        function showSettings() {
+            // Hide main platform content
+            const mainContent = document.getElementById('platform');
+            if (mainContent) {
+                mainContent.style.display = 'none';
+            }
+
+            // Show settings section
+            document.getElementById('config').style.display = 'block';
+
+            // Update API key input with current value (masked)
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            if (GEMINI_API_KEY) {
+                apiKeyInput.value = '••••••••••••••••••••••••••••••••••••••••';
+                updateApiKeyStatus();
+            }
+
+            // Update theme buttons
+            updateThemeButtons();
+        }
+
+        function hideSettings() {
+            // Show main platform content
+            const mainContent = document.getElementById('platform');
+            if (mainContent) {
+                mainContent.style.display = 'block';
+            }
+
+            // Hide settings section
+            document.getElementById('config').style.display = 'none';
+        }
+
+        // API Key management functions
+        function setApiKey() {
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
+            if (!apiKey || apiKey.includes('•')) {
+                showApiStatus('Please enter a valid API key', 'disconnected');
+                return;
+            }
+
+            // Validate API key format (basic check)
+            if (!apiKey.startsWith('AIza') || apiKey.length < 30) {
+                showApiStatus('Invalid API key format. Please check your key.', 'disconnected');
+                return;
+            }
+
+            GEMINI_API_KEY = apiKey;
+            GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+
+            // Use enhanced storage with multiple backups
+            if (storeApiKey(apiKey)) {
+                // Mask the input
+                document.getElementById('apiKeyInput').value = '••••••••••••••••••••••••••••••••••••••••';
+                showApiStatus('API key saved successfully with backup! You can now use all features.', 'connected');
+
+                // Test the connection
+                setTimeout(() => testApiKey(), 1000);
+            } else {
+                showApiStatus('Failed to save API key. Please try again.', 'disconnected');
+            }
+        }
+
+        function toggleApiKeyVisibility() {
+            const input = document.getElementById('apiKeyInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                if (GEMINI_API_KEY && input.value.includes('•')) {
+                    input.value = GEMINI_API_KEY;
+                }
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                if (GEMINI_API_KEY) {
+                    input.value = '••••••••••••••••••••••••••••••••••••••••';
+                }
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+        async function testApiKey() {
+            if (!GEMINI_API_KEY) {
+                showApiStatus('No API key configured', 'disconnected');
+                return;
+            }
+
+            showApiStatus('Testing connection...', 'testing');
+            document.getElementById('testApiBtn').disabled = true;
+
+            try {
+                const payload = {
+                    contents: [{ parts: [{ text: "Hello, this is a test message." }] }]
+                };
+
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    showApiStatus('✓ Connection successful! API key is working.', 'connected');
+                } else {
+                    showApiStatus('✗ Connection failed. Please check your API key.', 'disconnected');
+                }
+            } catch (error) {
+                showApiStatus('✗ Connection error. Please check your internet connection.', 'disconnected');
+            } finally {
+                document.getElementById('testApiBtn').disabled = false;
+            }
+        }
+
+        function clearApiKey() {
+            if (confirm('Are you sure you want to clear the API key? This will disable AI features.')) {
+                GEMINI_API_KEY = '';
+                GEMINI_API_URL = '';
+
+                // Clear from all storage locations
+                localStorage.removeItem(STORAGE_KEYS.apiKey);
+                localStorage.removeItem(STORAGE_KEYS.apiKeyBackup);
+                localStorage.removeItem('marine_api_config');
+                sessionStorage.removeItem(STORAGE_KEYS.apiKeySession);
+
+                document.getElementById('apiKeyInput').value = '';
+                showApiStatus('API key cleared from all storage locations. AI features are now disabled.', 'disconnected');
+            }
+        }
+
+        function showApiStatus(message, type) {
+            const statusDiv = document.getElementById('apiKeyStatus');
+            statusDiv.innerHTML = `<div class="api-status ${type}">${message}</div>`;
+        }
+
+        function updateApiKeyStatus() {
+            if (GEMINI_API_KEY) {
+                showApiStatus('✓ API key is configured', 'connected');
+            } else {
+                showApiStatus('No API key configured', 'disconnected');
+            }
+        }
+
+        // Storage health diagnostics
+        function checkStorageHealth() {
+            const healthDiv = document.getElementById('storageHealth');
+            let report = '<strong>Storage Health Report:</strong><br>';
+
+            try {
+                // Check localStorage availability
+                const testKey = 'storage_test_' + Date.now();
+                localStorage.setItem(testKey, 'test');
+                localStorage.removeItem(testKey);
+                report += '✅ localStorage: Working<br>';
+
+                // Check sessionStorage availability
+                sessionStorage.setItem(testKey, 'test');
+                sessionStorage.removeItem(testKey);
+                report += '✅ sessionStorage: Working<br>';
+
+                // Check API key storage locations
+                const mainKey = localStorage.getItem(STORAGE_KEYS.apiKey);
+                const backupKey = localStorage.getItem(STORAGE_KEYS.apiKeyBackup);
+                const sessionKey = sessionStorage.getItem(STORAGE_KEYS.apiKeySession);
+                const configData = localStorage.getItem('marine_api_config');
+
+                report += `📋 Main storage: ${mainKey ? '✅ Found' : '❌ Empty'}<br>`;
+                report += `📋 Backup storage: ${backupKey ? '✅ Found' : '❌ Empty'}<br>`;
+                report += `📋 Session storage: ${sessionKey ? '✅ Found' : '❌ Empty'}<br>`;
+                report += `📋 Config data: ${configData ? '✅ Found' : '❌ Empty'}<br>`;
+
+                // Check storage quota
+                if ('storage' in navigator && 'estimate' in navigator.storage) {
+                    navigator.storage.estimate().then(estimate => {
+                        const used = (estimate.usage / 1024 / 1024).toFixed(2);
+                        const quota = (estimate.quota / 1024 / 1024).toFixed(2);
+                        report += `💾 Storage used: ${used}MB / ${quota}MB<br>`;
+                        healthDiv.innerHTML = report;
+                    });
+                } else {
+                    report += '💾 Storage quota: Not available<br>';
+                    healthDiv.innerHTML = report;
+                }
+
+                // Browser info
+                report += `🌐 Browser: ${navigator.userAgent.split(' ').pop()}<br>`;
+                report += `🔒 Secure context: ${window.isSecureContext ? '✅ Yes' : '❌ No'}<br>`;
+
+            } catch (error) {
+                report += `❌ Storage Error: ${error.message}<br>`;
+                healthDiv.innerHTML = report;
+            }
+        }
+
+        // Theme management
+        function setTheme(theme) {
+            if (theme === 'auto') {
+                // Detect system preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+            }
+
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            // Update theme toggle icon in header
+            const themeIcon = document.querySelector('#theme-toggle i');
+            if (themeIcon) {
+                updateThemeIcon(theme, themeIcon);
+            }
+
+            updateThemeButtons();
+        }
+
+        function updateThemeButtons() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+
+            // Remove active class from all theme buttons
+            document.querySelectorAll('#darkThemeBtn, #lightThemeBtn, #autoThemeBtn').forEach(btn => {
+                if (btn) {
+                    btn.classList.remove('theme-option', 'active');
+                }
+            });
+
+            // Add active class to current theme button
+            const activeBtn = document.getElementById(`${currentTheme}ThemeBtn`);
+            if (activeBtn) {
+                activeBtn.classList.add('theme-option', 'active');
+            }
+        }
+
+        // Data management functions
+        function exportData() {
+            const data = {
+                identifications: getStoredIdentifications(),
+                chatHistory: getStoredChatHistory(),
+                exportDate: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `marine-platform-data-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showMessage('Data exported successfully!', 'success');
+        }
+
+        function clearChatHistory() {
+            if (confirm('Are you sure you want to clear all chat history? This action cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEYS.chatHistory);
+
+                // Reset chat messages to initial state
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = `
+                    <div class="message bot-message">
+                        <strong>Aqua:</strong> Hello! I'm Aqua, your marine biology assistant. Ask me anything about
+                        marine life, ocean ecosystems, or species identification!
+                    </div>
+                `;
+
+                showMessage('Chat history cleared successfully!', 'success');
+            }
+        }
+
+        function exportApiKey() {
+            if (!GEMINI_API_KEY) {
+                showMessage('No API key to export', 'error');
+                return;
+            }
+
+            const keyData = {
+                apiKey: GEMINI_API_KEY,
+                exportDate: new Date().toISOString(),
+                platform: 'Marine Species Identification Platform',
+                version: '1.0'
+            };
+
+            const blob = new Blob([JSON.stringify(keyData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `marine-api-key-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showMessage('API key exported successfully! Keep this file secure.', 'success');
+        }
+
+        function importApiKey() {
+            document.getElementById('apiKeyImportInput').click();
+        }
+
+        function handleApiKeyImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const content = e.target.result;
+                    let keyData;
+
+                    // Try to parse as JSON first
+                    try {
+                        keyData = JSON.parse(content);
+                        if (keyData.apiKey) {
+                            importApiKeyFromData(keyData.apiKey);
+                        } else {
+                            throw new Error('No API key found in JSON');
+                        }
+                    } catch (jsonError) {
+                        // If not JSON, treat as plain text API key
+                        const plainKey = content.trim();
+                        if (plainKey.startsWith('AIza')) {
+                            importApiKeyFromData(plainKey);
+                        } else {
+                            throw new Error('Invalid API key format');
+                        }
+                    }
+                } catch (error) {
+                    showMessage(`Import failed: ${error.message}`, 'error');
+                }
+            };
+            reader.readAsText(file);
+
+            // Reset the input
+            event.target.value = '';
+        }
+
+        function importApiKeyFromData(apiKey) {
+            if (!apiKey || !apiKey.startsWith('AIza')) {
+                showMessage('Invalid API key format', 'error');
+                return;
+            }
+
+            GEMINI_API_KEY = apiKey;
+            GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+
+            if (storeApiKey(apiKey)) {
+                document.getElementById('apiKeyInput').value = '••••••••••••••••••••••••••••••••••••••••';
+                showApiStatus('API key imported and saved successfully!', 'connected');
+                showMessage('API key imported successfully!', 'success');
+
+                // Test the imported key
+                setTimeout(() => testApiKey(), 1000);
+            } else {
+                showMessage('Failed to save imported API key', 'error');
+            }
+        }
+
+        function clearIdentifications() {
+            if (confirm('Are you sure you want to clear all identification results? This action cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEYS.identifications);
+
+                // Reset results container
+                const resultsContainer = document.getElementById('resultsContainer');
+                resultsContainer.innerHTML = `
+                    <p style="text-align: center; color: var(--text-secondary); padding: var(--spacing-2xl);">
+                        Upload an image to see species identification results here
+                    </p>
+                `;
+
+                showMessage('Identification results cleared successfully!', 'success');
+            }
+        }
+
+        // Initialize API URL if key exists
+        function initializeApp() {
+            if (GEMINI_API_KEY) {
+                GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+            }
+
+            // Initialize theme buttons
+            updateThemeButtons();
+
+            // Show settings if no API key is configured
+            if (!GEMINI_API_KEY) {
+                showSettings();
+                showApiStatus('Please configure your API key to enable AI features', 'disconnected');
+            }
+        }
+
+        // File upload functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadLoading = document.getElementById('uploadLoading');
+        const uploadMessage = document.getElementById('uploadMessage');
+        const resultsContainer = document.getElementById('resultsContainer');
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0]);
+            }
+        });
+
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        async function handleFileUpload(file) {
+            if (!file.type.startsWith('image/')) {
+                showMessage('Please select an image file.', 'error');
+                return;
+            }
+
+            if (file.size > 4 * 1024 * 1024) {
+                showMessage('File size must be less than 4MB for browser processing.', 'error');
+                return;
+            }
+
+            uploadLoading.style.display = 'block';
+            uploadMessage.innerHTML = '';
+
+            try {
+                if (!GEMINI_API_KEY) {
+                    showMessage('Please configure your Gemini API key first. Go to Settings to add your API key.', 'error');
+                    return;
+                }
+
+                // Convert file to base64
+                const base64 = await fileToBase64(file);
+                const base64Data = base64.split(',')[1]; // Remove data:image/jpeg;base64, prefix
+
+                // Analyze with Gemini API
+                const analysis = await analyzeImageWithGemini(base64Data, file.type);
+
+                // Create result object
+                const result = {
+                    filename: file.name,
+                    analysis: analysis,
+                    timestamp: new Date().toISOString(),
+                    fileUrl: base64 // Use base64 for display
+                };
+
+                // Save to local storage
+                saveIdentification(result);
+
+                showMessage('Image analyzed successfully!', 'success');
+                displayResult(result);
+                loadRecentIdentifications();
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                showMessage('Failed to analyze image. Please check your API key and try again.', 'error');
+            } finally {
+                uploadLoading.style.display = 'none';
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function analyzeImageWithGemini(imageBase64, mimeType) {
+            const payload = {
+                contents: [{
+                    parts: [
+                        {
+                            text: `Identify the marine species in this image. Please provide your response in the following JSON format:
+                        {
+                            "commonName": "Common name of the species",
+                            "scientificName": "Scientific name",
+                            "description": "Brief description of the species",
+                            "confidence": 0.85,
+                            "habitat": "Where it's typically found",
+                            "characteristics": ["key feature 1", "key feature 2"]
+                        }` },
+                        { inlineData: { mimeType: mimeType, data: imageBase64 } }
+                    ]
+                }],
+            };
+
+            const response = await fetch(GEMINI_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Gemini API failed with status ${response.status}`);
+            }
+
+            const result = await response.json();
+            const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            try {
+                // Try to parse JSON response
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+            } catch (e) {
+                console.log("Failed to parse JSON, using text response");
+            }
+
+            // Fallback to text response
+            return {
+                commonName: "Unknown",
+                scientificName: "Unknown",
+                description: text,
+                confidence: 0.5
+            };
+        }
+
+        function displayResult(result) {
+            const analysis = result.analysis;
+            const resultHTML = `
+                <div class="result-item">
+                    <img src="${result.fileUrl}" alt="Uploaded marine species" class="result-image">
+                    <div class="result-info">
+                        <h3>${analysis.commonName || 'Unknown Species'}</h3>
+                        <p class="scientific-name">${analysis.scientificName || 'Scientific name not identified'}</p>
+                        <p><strong>Description:</strong> ${analysis.description || 'No description available'}</p>
+                        ${analysis.habitat ? `<p><strong>Habitat:</strong> ${analysis.habitat}</p>` : ''}
+                        ${analysis.characteristics ? `<p><strong>Key Features:</strong> ${analysis.characteristics.join(', ')}</p>` : ''}
+                        ${analysis.confidence ? `<p><strong>Confidence:</strong> ${Math.round(analysis.confidence * 100)}%</p>` : ''}
+                        <p><strong>Analyzed:</strong> ${new Date(result.timestamp).toLocaleDateString()}</p>
+                    </div>
+                </div>
+            `;
+            resultsContainer.innerHTML = resultHTML + resultsContainer.innerHTML;
+        }
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            if (message.length > 1000) {
+                addMessageToChat('Message too long. Please keep it under 1000 characters.', 'bot');
+                return;
+            }
+
+            // Add user message to chat
+            addMessageToChat(message, 'user');
+            chatInput.value = '';
+            sendBtn.disabled = true;
+
+            try {
+                if (!GEMINI_API_KEY) {
+                    addMessageToChat('Please configure your Gemini API key first to use the chat feature. Go to Settings to add your API key.', 'bot');
+                    sendBtn.disabled = false;
+                    return;
+                }
+
+                const payload = {
+                    contents: [{ parts: [{ text: message }] }],
+                    systemInstruction: {
+                        parts: [{ text: "You are Aqua, a knowledgeable marine biology AI assistant. You help users identify marine species, provide information about ocean life, marine ecosystems, conservation, and answer questions about marine biology. Keep responses informative but concise." }]
+                    },
+                };
+
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API failed with status ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    addMessageToChat(text, 'bot');
+                    saveChatMessage(message, text);
+                } else {
+                    addMessageToChat('Sorry, I didn\'t receive a proper response.', 'bot');
+                }
+
+            } catch (error) {
+                console.error('Chat error:', error);
+                addMessageToChat('Sorry, I\'m having trouble connecting. Please check your API key and try again.', 'bot');
+            } finally {
+                sendBtn.disabled = false;
+            }
+        }
+
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerHTML = `<strong>${sender === 'user' ? 'You' : 'Aqua'}:</strong> ${message}`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Local storage functions
+        function saveIdentification(result) {
+            const identifications = getStoredIdentifications();
+            identifications.unshift(result);
+            // Keep only last 10 identifications
+            if (identifications.length > 10) {
+                identifications.splice(10);
+            }
+            localStorage.setItem(STORAGE_KEYS.identifications, JSON.stringify(identifications));
+        }
+
+        function getStoredIdentifications() {
+            const stored = localStorage.getItem(STORAGE_KEYS.identifications);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveChatMessage(message, response) {
+            const chatHistory = getStoredChatHistory();
+            chatHistory.unshift({
+                message: message,
+                response: response,
+                timestamp: new Date().toISOString()
+            });
+            // Keep only last 20 chat exchanges
+            if (chatHistory.length > 20) {
+                chatHistory.splice(20);
+            }
+            localStorage.setItem(STORAGE_KEYS.chatHistory, JSON.stringify(chatHistory));
+        }
+
+        function getStoredChatHistory() {
+            const stored = localStorage.getItem(STORAGE_KEYS.chatHistory);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        // Load recent identifications from local storage
+        function loadRecentIdentifications() {
+            const identifications = getStoredIdentifications();
+
+            if (identifications.length > 0) {
+                resultsContainer.innerHTML = '';
+                identifications.forEach(item => {
+                    const analysis = item.analysis;
+                    const resultHTML = `
+                        <div class="result-item">
+                            <img src="${item.fileUrl}" alt="${analysis.commonName}" class="result-image">
+                            <div class="result-info">
+                                <h3>${analysis.commonName || 'Unknown Species'}</h3>
+                                <p class="scientific-name">${analysis.scientificName || 'Unknown'}</p>
+                                <p><strong>Description:</strong> ${analysis.description || 'No description available'}</p>
+                                ${analysis.habitat ? `<p><strong>Habitat:</strong> ${analysis.habitat}</p>` : ''}
+                                ${analysis.characteristics ? `<p><strong>Key Features:</strong> ${analysis.characteristics.join(', ')}</p>` : ''}
+                                ${analysis.confidence ? `<p><strong>Confidence:</strong> ${Math.round(analysis.confidence * 100)}%</p>` : ''}
+                                <p><strong>Analyzed:</strong> ${new Date(item.timestamp).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += resultHTML;
+                });
+            }
+        }
+
+        function showMessage(message, type) {
+            uploadMessage.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => {
+                uploadMessage.innerHTML = '';
+            }, 5000);
+        }
+
+        // ===== KEYBOARD ACCESSIBILITY =====
+        document.addEventListener('keydown', function (e) {
+            // Close mobile menu with Escape key
+            if (e.key === 'Escape' && navMenu && navMenu.classList.contains('show-menu')) {
+                navMenu.classList.remove('show-menu');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'visible';
+            }
+        });
+
+        // ===== SMOOTH SCROLLING =====
+        document.addEventListener('click', function (e) {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 70;
+
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

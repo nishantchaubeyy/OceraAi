@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisheries Intelligence - OceanAI Platform</title>
+    <meta name="description" content="Advanced analytics for sustainable fishing practices, stock assessment, and marine resource management">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OceanAI</span>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="../index.html" class="nav__link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="oceanographic.html" class="nav__link">Oceanographic</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="fisheries.html" class="nav__link active-link">Fisheries</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="biodiversity.html" class="nav__link">Biodiversity</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section">
+        <div class="hero__container container grid">
+            <div class="hero__data">
+                <h1 class="hero__title">
+                    <span class="gradient-text">Fisheries</span> Intelligence Platform
+                </h1>
+                <p class="hero__description">
+                    Empower sustainable fishing practices with AI-driven stock assessments, 
+                    catch predictions, and marine resource management tools for the future of our oceans.
+                </p>
+                <div class="hero__buttons">
+                    <a href="#analytics" class="btn btn--primary">
+                        <i class="fas fa-chart-bar"></i>
+                        View Analytics
+                    </a>
+                    <a href="#sustainability" class="btn btn--secondary">
+                        <i class="fas fa-leaf"></i>
+                        Sustainability Metrics
+                    </a>
+                </div>
+            </div>
+            <div class="hero__image">
+                <div class="hero__visual">
+                    <div class="floating-card card--1">
+                        <i class="fas fa-fish"></i>
+                        <span>Fish Stocks</span>
+                        <strong>2.3M tons</strong>
+                    </div>
+                    <div class="floating-card card--2">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Sustainability</span>
+                        <strong>87% MSY</strong>
+                    </div>
+                    <div class="floating-card card--3">
+                        <i class="fas fa-ship"></i>
+                        <span>Active Fleet</span>
+                        <strong>4,567 vessels</strong>
+                    </div>
+                    <div class="hero__globe">
+                        <i class="fas fa-anchor"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Dashboard Section -->
+    <section class="section" id="analytics">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Fisheries Analytics Dashboard</h2>
+                <p class="section__description">
+                    Real-time insights into global fishing operations and stock assessments
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 3rem;">
+                <div class="insight-card">
+                    <h4>Global Fish Catch</h4>
+                    <span class="value">94.4M tons</span>
+                    <span class="trend down">↘ 2.1% from last year</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Sustainable Stocks</h4>
+                    <span class="value">67%</span>
+                    <span class="trend up">↗ 3% improvement</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Economic Value</h4>
+                    <span class="value">$164B</span>
+                    <span class="trend up">↗ $5.2B increase</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Fleet Efficiency</h4>
+                    <span class="value">78%</span>
+                    <span class="trend up">↗ 4% optimization</span>
+                </div>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--black);">Fish Stock Trends</h3>
+                    <canvas id="stockChart" height="300"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--black);">Catch by Species</h3>
+                    <canvas id="speciesChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Solutions Section -->
+    <section class="section" style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">AI-Powered Fisheries Solutions</h2>
+                <p class="section__description">
+                    Cutting-edge artificial intelligence for sustainable marine resource management
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="card__title">Stock Assessment AI</h3>
+                    <p class="card__description">
+                        Advanced machine learning models for accurate fish population 
+                        estimates and biomass predictions.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Population dynamics modeling</li>
+                        <li><i class="fas fa-check"></i> Recruitment forecasting</li>
+                        <li><i class="fas fa-check"></i> Spawning biomass estimation</li>
+                        <li><i class="fas fa-check"></i> Uncertainty quantification</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card__title">Catch Prediction Models</h3>
+                    <p class="card__description">
+                        Predictive analytics for optimal fishing locations, timing, 
+                        and expected catch volumes based on environmental data.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Spatial-temporal modeling</li>
+                        <li><i class="fas fa-check"></i> Environmental correlation</li>
+                        <li><i class="fas fa-check"></i> Species distribution maps</li>
+                        <li><i class="fas fa-check"></i> Seasonal pattern analysis</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="card__title">Sustainability Metrics</h3>
+                    <p class="card__description">
+                        Comprehensive assessment of fishing practices against 
+                        sustainability benchmarks and conservation goals.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> MSY calculations</li>
+                        <li><i class="fas fa-check"></i> Overfishing indicators</li>
+                        <li><i class="fas fa-check"></i> Ecosystem impact assessment</li>
+                        <li><i class="fas fa-check"></i> Certification compliance</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3 class="card__title">Fleet Optimization</h3>
+                    <p class="card__description">
+                        Intelligent route planning and resource allocation to 
+                        maximize efficiency while minimizing environmental impact.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Route optimization algorithms</li>
+                        <li><i class="fas fa-check"></i> Fuel efficiency modeling</li>
+                        <li><i class="fas fa-check"></i> Dynamic vessel scheduling</li>
+                        <li><i class="fas fa-check"></i> Cost-benefit analysis</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="card__title">Compliance Monitoring</h3>
+                    <p class="card__description">
+                        Automated monitoring of fishing quotas, protected areas, 
+                        and regulatory compliance using satellite and sensor data.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Real-time vessel tracking</li>
+                        <li><i class="fas fa-check"></i> Quota management</li>
+                        <li><i class="fas fa-check"></i> Protected area monitoring</li>
+                        <li><i class="fas fa-check"></i> Violation detection</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="card__title">Species Identification</h3>
+                    <p class="card__description">
+                        AI-powered image recognition and genetic analysis for 
+                        accurate species identification and catch documentation.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Computer vision analysis</li>
+                        <li><i class="fas fa-check"></i> Genetic barcoding</li>
+                        <li><i class="fas fa-check"></i> Size estimation algorithms</li>
+                        <li><i class="fas fa-check"></i> Quality assessment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Section -->
+    <section class="section" id="sustainability">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Sustainable Fishing Initiatives</h2>
+                <p class="section__description">
+                    Promoting responsible fishing practices for ocean conservation
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
+                <div>
+                    <h3 style="font-size: 1.5rem; color: var(--black); margin-bottom: 1rem;">
+                        Maximum Sustainable Yield (MSY) Tracking
+                    </h3>
+                    <p style="color: var(--gray); margin-bottom: 2rem; line-height: 1.7;">
+                        Our platform continuously monitors fish stocks against MSY benchmarks, 
+                        ensuring fishing activities remain within sustainable limits while 
+                        maximizing long-term economic benefits.
+                    </p>
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="about__stat">
+                            <h3 style="color: var(--accent-green);">73%</h3>
+                            <p>Stocks at MSY</p>
+                        </div>
+                        <div class="about__stat">
+                            <h3 style="color: var(--primary-color);">15%</h3>
+                            <p>Under-exploited</p>
+                        </div>
+                        <div class="about__stat">
+                            <h3 style="color: #f59e0b;">12%</h3>
+                            <p>Over-exploited</p>
+                        </div>
+                        <div class="about__stat">
+                            <h3 style="color: var(--accent-teal);">94%</h3>
+                            <p>Compliance Rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--black);">Stock Status Distribution</h3>
+                    <canvas id="sustainabilityChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="section" style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Advanced Monitoring Technologies</h2>
+                <p class="section__description">
+                    State-of-the-art tools for comprehensive fisheries management
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <div class="data__source">
+                    <i class="fas fa-satellite"></i>
+                    <h4>Satellite Monitoring</h4>
+                    <p>Real-time vessel tracking and fishing activity detection</p>
+                    <strong style="color: var(--primary-color);">24/7 Coverage</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Mobile Applications</h4>
+                    <p>Fisher-friendly apps for data collection and reporting</p>
+                    <strong style="color: var(--primary-color);">25K+ Users</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-network-wired"></i>
+                    <h4>IoT Sensors</h4>
+                    <p>Smart fishing gear with embedded monitoring devices</p>
+                    <strong style="color: var(--primary-color);">50K+ Sensors</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-drone"></i>
+                    <h4>Aerial Surveys</h4>
+                    <p>Drone-based fish population and habitat monitoring</p>
+                    <strong style="color: var(--primary-color);">150 Surveys/month</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-video"></i>
+                    <h4>Underwater Cameras</h4>
+                    <p>Automated fish counting and behavior analysis</p>
+                    <strong style="color: var(--primary-color);">1,200 Cameras</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-database"></i>
+                    <h4>Big Data Analytics</h4>
+                    <p>Processing millions of data points for insights</p>
+                    <strong style="color: var(--primary-color);">100TB+ Data</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Success Stories</h2>
+                <p class="section__description">
+                    Real-world impact of AI-driven fisheries management
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                <div class="platform__card">
+                    <h3 class="card__title">Pacific Bluefin Tuna Recovery</h3>
+                    <p class="card__description">
+                        Implemented AI-driven quota management for Pacific bluefin tuna, 
+                        resulting in 35% stock recovery over 3 years while maintaining 
+                        economic viability for fishing communities.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div>
+                            <strong style="color: var(--accent-green); font-size: 1.5rem;">+35%</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Stock Recovery</p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--primary-color); font-size: 1.5rem;">$24M</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Economic Impact</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platform__card">
+                    <h3 class="card__title">North Sea Cod Sustainability</h3>
+                    <p class="card__description">
+                        Deployed predictive models to optimize fishing seasons and locations, 
+                        achieving 42% reduction in juvenile catch while increasing overall 
+                        fishing efficiency by 28%.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div>
+                            <strong style="color: var(--accent-green); font-size: 1.5rem;">-42%</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Juvenile Bycatch</p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--primary-color); font-size: 1.5rem;">+28%</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Efficiency Gain</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platform__card">
+                    <h3 class="card__title">Small-Scale Fisheries Empowerment</h3>
+                    <p class="card__description">
+                        Provided mobile technology and AI insights to 500+ small-scale 
+                        fishing operations, improving their catch rates by 45% and 
+                        connecting them to premium markets.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div>
+                            <strong style="color: var(--accent-green); font-size: 1.5rem;">+45%</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Catch Improvement</p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--primary-color); font-size: 1.5rem;">500+</strong>
+                            <p style="font-size: 0.875rem; color: var(--gray);">Fishers Supported</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background: var(--gradient-secondary); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">Transform Your Fisheries Operations</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
+                Join the sustainable fishing revolution with AI-powered insights and analytics
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#" class="btn" style="background: white; color: var(--secondary-color);">
+                    <i class="fas fa-rocket"></i>
+                    Start Free Trial
+                </a>
+                <a href="#" class="btn" style="background: transparent; color: white; border: 2px solid white;">
+                    <i class="fas fa-phone"></i>
+                    Schedule Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__container grid">
+                <div class="footer__content">
+                    <div class="footer__logo">
+                        <i class="fas fa-wave-square"></i>
+                        <span>OceanAI</span>
+                    </div>
+                    <p class="footer__description">
+                        Advancing marine science through artificial intelligence and data-driven insights.
+                    </p>
+                    <div class="footer__social">
+                        <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer__links">
+                    <div class="footer__group">
+                        <h4 class="footer__title">Platform</h4>
+                        <ul class="footer__list">
+                            <li><a href="oceanographic.html" class="footer__link">Oceanographic</a></li>
+                            <li><a href="fisheries.html" class="footer__link">Fisheries</a></li>
+                            <li><a href="biodiversity.html" class="footer__link">Biodiversity</a></li>
+                            <li><a href="#" class="footer__link">API Documentation</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Resources</h4>
+                        <ul class="footer__list">
+                            <li><a href="#" class="footer__link">Research Papers</a></li>
+                            <li><a href="#" class="footer__link">Case Studies</a></li>
+                            <li><a href="#" class="footer__link">Documentation</a></li>
+                            <li><a href="#" class="footer__link">Tutorials</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Company</h4>
+                        <ul class="footer__list">
+                            <li><a href="../index.html#about" class="footer__link">About Us</a></li>
+                            <li><a href="#" class="footer__link">Careers</a></li>
+                            <li><a href="#" class="footer__link">News</a></li>
+                            <li><a href="../index.html#contact" class="footer__link">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    © 2024 OceanAI. All rights reserved. | 
+                    <a href="#" class="footer__link">Privacy Policy</a> | 
+                    <a href="#" class="footer__link">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top Button -->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" id="chatbotFloat" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+        <span class="chatbot-tooltip">Ask AI about Fisheries Data</span>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>Fisheries Data Assistant</h3>
+                    <span class="status-indicator">
+                        <i class="fas fa-circle"></i> Online
+                    </span>
+                </div>
+            </div>
+            <div class="chatbot-actions">
+                <button onclick="minimizeChatbot()" title="Minimize">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button onclick="closeChatbot()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chatbot-messages" id="popupChatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hi! I can help analyze fisheries data including stock assessments, catch data, and sustainability metrics.</p>
+                    <p>Try asking:</p>
+                    <ul>
+                        <li>"What's the tuna stock status?"</li>
+                        <li>"Show fishing quota trends"</li>
+                        <li>"Compare species sustainability"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-quick-actions">
+            <button class="quick-action-btn" onclick="sendPopupMessage('What is the tuna stock status?')">
+                <i class="fas fa-fish"></i> Stock Status
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Show fishing quotas')">
+                <i class="fas fa-chart-line"></i> Quotas
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Compare fisheries sustainability')">
+                <i class="fas fa-leaf"></i> Sustainability
+            </button>
+        </div>
+
+        <div class="chatbot-input">
+            <input type="text" id="popupMessageInput" placeholder="Ask about fisheries data..." 
+                   onkeypress="handlePopupKeyPress(event)">
+            <button onclick="sendPopupMessage()" id="popupSendButton">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div class="popup-viz-panel" id="popupVizPanel" style="display: none;">
+            <div class="viz-header">
+                <h4>Data Visualization</h4>
+                <button onclick="closePopupViz()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="viz-content">
+                <canvas id="popupChart" width="350" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/chatbot.js"></script>
+    <script src="../js/popup-chatbot.js"></script>
+    <script>
+        // Additional chart initialization for fisheries page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Stock Chart
+            const stockCtx = document.getElementById('stockChart');
+            if (stockCtx) {
+                new Chart(stockCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                        datasets: [
+                            {
+                                label: 'Sustainable Stocks (%)',
+                                data: [62, 64, 65, 66, 67, 67],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4,
+                            },
+                            {
+                                label: 'Over-fished Stocks (%)',
+                                data: [38, 36, 35, 34, 33, 33],
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Species Chart
+            const speciesCtx = document.getElementById('speciesChart');
+            if (speciesCtx) {
+                new Chart(speciesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Anchovy', 'Tuna', 'Cod', 'Salmon', 'Shrimp', 'Other'],
+                        datasets: [{
+                            data: [25, 18, 15, 12, 10, 20],
+                            backgroundColor: [
+                                '#3b82f6',
+                                '#06b6d4',
+                                '#10b981',
+                                '#f59e0b',
+                                '#8b5cf6',
+                                '#64748b'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Sustainability Chart
+            const sustainabilityCtx = document.getElementById('sustainabilityChart');
+            if (sustainabilityCtx) {
+                new Chart(sustainabilityCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Sustainable', 'Under-exploited', 'Over-exploited'],
+                        datasets: [{
+                            data: [73, 15, 12],
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

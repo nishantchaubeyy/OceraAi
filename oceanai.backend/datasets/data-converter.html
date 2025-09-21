@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Dataset Converter</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0f172a;
+            color: #ffffff;
+        }
+        .container {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #3b82f6;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 3px dashed #3b82f6;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .upload-area.dragover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #60a5fa;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        button {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .output {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .field-mapping {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .field-mapping h3 {
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+        select, input[type="text"] {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid #374151;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐠 Marine Dataset Converter</h1>
+        <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">
+            Convert your marine data files to the optimal format for the Marine Species Platform
+        </p>
+
+        <div class="upload-area" id="uploadArea">
+            <div style="font-size: 3rem; color: #3b82f6; margin-bottom: 15px;">📊</div>
+            <p>Drag and drop your CSV, Excel, or JSON file here</p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">or click to select a file</p>
+            <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.json">
+        </div>
+
+        <div id="fieldMapping" style="display: none;">
+            <div class="field-mapping">
+                <h3>Map Your Data Fields</h3>
+                <p style="color: #94a3b8; margin-bottom: 15px;">
+                    Map your file columns to the standard marine dataset fields:
+                </p>
+                <div id="mappingControls"></div>
+                <button onclick="processData()">Convert Data</button>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="downloadTemplate()">📥 Download CSV Template</button>
+            <button onclick="downloadSample()">🐟 Download Sample Data</button>
+        </div>
+
+        <div id="status"></div>
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        let currentData = null;
+        let currentHeaders = null;
+
+        const standardFields = {
+            'species_name': 'Common Name',
+            'scientific_name': 'Scientific Name',
+            'habitat': 'Habitat',
+            'depth_range': 'Depth Range',
+            'temperature_range': 'Temperature Range',
+            'distribution': 'Distribution',
+            'conservation_status': 'Conservation Status',
+            'diet': 'Diet',
+            'size': 'Size',
+            'weight': 'Weight',
+            'characteristics': 'Characteristics',
+            'threats': 'Threats',
+            'interesting_facts': 'Interesting Facts'
+        };
+
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        async function handleFile(file) {
+            showStatus('Processing file...', 'info');
+            
+            try {
+                const content = await readFile(file);
+                
+                if (file.name.endsWith('.csv')) {
+                    parseCSV(content);
+                } else if (file.name.endsWith('.json')) {
+                    parseJSON(content);
+                } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+                    showStatus('Excel files not supported yet. Please convert to CSV first.', 'error');
+                    return;
+                }
+                
+                showFieldMapping();
+                
+            } catch (error) {
+                showStatus(`Error processing file: ${error.message}`, 'error');
+            }
+        }
+
+        function readFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsText(file);
+            });
+        }
+
+        function parseCSV(content) {
+            const lines = content.trim().split('\n');
+            if (lines.length < 2) {
+                throw new Error('CSV file must have at least a header row and one data row');
+            }
+            
+            currentHeaders = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            currentData = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+                if (values.length === currentHeaders.length) {
+                    const record = {};
+                    currentHeaders.forEach((header, index) => {
+                        record[header] = values[index];
+                    });
+                    currentData.push(record);
+                }
+            }
+            
+            showStatus(`Parsed ${currentData.length} records from CSV`, 'success');
+        }
+
+        function parseJSON(content) {
+            try {
+                const data = JSON.parse(content);
+                if (!Array.isArray(data)) {
+                    throw new Error('JSON must be an array of objects');
+                }
+                
+                currentData = data;
+                currentHeaders = [...new Set(data.flatMap(Object.keys))];
+                
+                showStatus(`Parsed ${currentData.length} records from JSON`, 'success');
+            } catch (error) {
+                throw new Error(`Invalid JSON format: ${error.message}`);
+            }
+        }
+
+        function showFieldMapping() {
+            const mappingDiv = document.getElementById('fieldMapping');
+            const controlsDiv = document.getElementById('mappingControls');
+            
+            let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">';
+            
+            Object.entries(standardFields).forEach(([field, label]) => {
+                html += `
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; color: #e2e8f0;">${label}:</label>
+                        <select id="map_${field}" style="width: 100%;">
+                            <option value="">-- Skip this field --</option>
+                            ${currentHeaders.map(header => 
+                                `<option value="${header}" ${header.toLowerCase().includes(field.split('_')[0]) ? 'selected' : ''}>${header}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            controlsDiv.innerHTML = html;
+            mappingDiv.style.display = 'block';
+        }
+
+        function processData() {
+            const mapping = {};
+            
+            // Get field mappings
+            Object.keys(standardFields).forEach(field => {
+                const select = document.getElementById(`map_${field}`);
+                if (select.value) {
+                    mapping[field] = select.value;
+                }
+            });
+            
+            // Convert data
+            const convertedData = currentData.map(record => {
+                const newRecord = {};
+                Object.entries(mapping).forEach(([standardField, originalField]) => {
+                    if (record[originalField]) {
+                        newRecord[standardField] = record[originalField];
+                    }
+                });
+                return newRecord;
+            });
+            
+            // Show results
+            showOutput(convertedData);
+            showStatus(`Converted ${convertedData.length} records successfully!`, 'success');
+        }
+
+        function showOutput(data) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'block';
+            
+            const jsonOutput = JSON.stringify(data, null, 2);
+            outputDiv.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="color: #60a5fa;">Converted Data (JSON Format)</h3>
+                    <div>
+                        <button onclick="downloadJSON()">📥 Download JSON</button>
+                        <button onclick="downloadCSV()">📥 Download CSV</button>
+                        <button onclick="copyToClipboard()">📋 Copy</button>
+                    </div>
+                </div>
+                <pre id="jsonOutput">${jsonOutput}</pre>
+            `;
+            
+            // Store for download
+            window.convertedData = data;
+        }
+
+        function downloadJSON() {
+            const blob = new Blob([JSON.stringify(window.convertedData, null, 2)], { type: 'application/json' });
+            downloadBlob(blob, 'marine_dataset.json');
+        }
+
+        function downloadCSV() {
+            if (!window.convertedData || window.convertedData.length === 0) return;
+            
+            const headers = Object.keys(window.convertedData[0]);
+            let csv = headers.join(',') + '\n';
+            
+            window.convertedData.forEach(record => {
+                const values = headers.map(header => {
+                    const value = record[header] || '';
+                    return `"${value.toString().replace(/"/g, '""')}"`;
+                });
+                csv += values.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            downloadBlob(blob, 'marine_dataset.csv');
+        }
+
+        function downloadTemplate() {
+            const headers = Object.keys(standardFields);
+            const csv = headers.join(',') + '\n' + 
+                       'Great White Shark,Carcharodon carcharias,Coastal waters,0-1200m,12-24°C,Worldwide,Vulnerable,Fish and marine mammals,4.6-6.1m,680-1100kg,"Apex predator, Excellent sense of smell",Overfishing,"Can detect blood from 5km away"\n';
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            downloadBlob(blob, 'marine_dataset_template.csv');
+        }
+
+        function downloadSample() {
+            fetch('./sample_marine_data.json')
+                .then(response => response.json())
+                .then(data => {
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    downloadBlob(blob, 'sample_marine_data.json');
+                })
+                .catch(() => {
+                    showStatus('Sample data not found', 'error');
+                });
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('jsonOutput');
+            navigator.clipboard.writeText(output.textContent).then(() => {
+                showStatus('Copied to clipboard!', 'success');
+            });
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+            
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    statusDiv.innerHTML = '';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

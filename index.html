@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>OCERA - Unified Data Platform for Marine Insights</title>
+    <meta name="description"
+        content="AI-Driven platform for oceanographic, fisheries, and molecular biodiversity data analysis and insights">
+    <link rel="stylesheet" href="css/styles-clean.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/desktop.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header and Navigation -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OCERA</span>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#platform" class="nav__link">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Platform</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#insights" class="nav__link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>AI Insights</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#data" class="nav__link">
+                            <i class="fas fa-database"></i>
+                            <span>Data Sources</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#applications" class="nav__link">
+                            <i class="fas fa-rocket"></i>
+                            <span>Applications</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section" id="home">
+        <video class="hero__video" autoplay muted loop>
+            <source src="assets/bgs.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero__overlay"></div>
+        <div class="hero__container container grid">
+            <div class="hero__data">
+                <h1 class="hero__title">
+                    AI-Driven Unified <span class="gradient-text">Ocean Data</span> Platform
+                </h1>
+                <p class="hero__description">
+                    Harness the power of artificial intelligence to unlock insights from oceanographic,
+                    fisheries, and molecular biodiversity data. Explore, analyze, and discover patterns
+                    that drive marine conservation and sustainable resource management.
+                </p>
+                <div class="hero__buttons">
+                    <a href="#platform" class="btn btn--primary">
+                        <i class="fas fa-rocket"></i>
+                        Explore Platform
+                    </a>
+                    <a href="#demo" class="btn btn--secondary">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                </div>
+                <div class="hero__stats">
+                    <div class="stat">
+                        <span class="stat__number">500M+</span>
+                        <span class="stat__label">Data Points</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">15K+</span>
+                        <span class="stat__label">Species</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">99.9%</span>
+                        <span class="stat__label">Accuracy</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="hero__scroll">
+            <a href="#platform" class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Platform Overview -->
+    <section class="platform section" id="platform">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Comprehensive Data Platform</h2>
+                <p class="section__description">
+                    Our integrated platform combines cutting-edge AI with comprehensive marine data sources
+                </p>
+            </div>
+
+            <div class="platform__grid grid">
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3 class="card__title">Oceanographic Data</h3>
+                    <p class="card__description">
+                        Real-time monitoring of ocean conditions, temperature patterns,
+                        currents, and environmental parameters.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Temperature & Salinity Tracking</li>
+                        <li><i class="fas fa-check"></i> Current Flow Analysis</li>
+                        <li><i class="fas fa-check"></i> pH & Chemical Composition</li>
+                        <li><i class="fas fa-check"></i> Satellite Data Integration</li>
+                    </ul>
+                    <a href="pages/oceanographic.html" class="card__link">
+                        Explore <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <h3 class="card__title">Fisheries Intelligence</h3>
+                    <p class="card__description">
+                        Advanced analytics for sustainable fishing practices, stock assessment,
+                        and marine resource management.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Stock Assessment AI</li>
+                        <li><i class="fas fa-check"></i> Catch Prediction Models</li>
+                        <li><i class="fas fa-check"></i> Sustainability Metrics</li>
+                        <li><i class="fas fa-check"></i> Fleet Optimization</li>
+                    </ul>
+                    <a href="pages/fisheries.html" class="card__link">
+                        Explore <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3 class="card__title">Biodiversity Analysis</h3>
+                    <p class="card__description">
+                        Molecular-level insights into marine biodiversity, genetic patterns,
+                        and ecosystem health indicators.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> DNA Sequencing Analysis</li>
+                        <li><i class="fas fa-check"></i> Species Identification</li>
+                        <li><i class="fas fa-check"></i> Genetic Diversity Mapping</li>
+                        <li><i class="fas fa-check"></i> Conservation Insights</li>
+                    </ul>
+                    <a href="pages/biodiversity.html" class="card__link">
+                        Explore <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Insights Section -->
+    <section class="insights section" id="insights">
+        <div class="container">
+            <div class="insights__container grid">
+                <div class="insights__data">
+                    <h2 class="section__title">AI-Powered Insights</h2>
+                    <p class="section__description">
+                        Our advanced machine learning algorithms process vast amounts of marine data
+                        to provide actionable insights for researchers, conservationists, and policymakers.
+                    </p>
+
+                    <div class="insights__features">
+                        <div class="feature">
+                            <div class="feature__icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="feature__content">
+                                <h4>Predictive Analytics</h4>
+                                <p>Forecast marine conditions and species behavior patterns</p>
+                            </div>
+                        </div>
+
+                        <div class="feature">
+                            <div class="feature__icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature__content">
+                                <h4>Real-time Monitoring</h4>
+                                <p>Continuous analysis of ocean health and ecosystem changes</p>
+                            </div>
+                        </div>
+
+                        <div class="feature">
+                            <div class="feature__icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature__content">
+                                <h4>Conservation Alerts</h4>
+                                <p>Early warning systems for environmental threats</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#demo" class="btn btn--primary">
+                        <i class="fas fa-play"></i>
+                        View Demo
+                    </a>
+                </div>
+
+                <div class="insights__visual">
+                    <div class="chart-container">
+                        <canvas id="dataChart" width="400" height="300"></canvas>
+                    </div>
+                    <div class="insight-cards">
+                        <div class="insight-card">
+                            <h4>Ocean Temperature</h4>
+                            <span class="value">+1.2°C</span>
+                            <span class="trend up">↗ 0.3%</span>
+                        </div>
+                        <div class="insight-card">
+                            <h4>Fish Population</h4>
+                            <span class="value">2.3M</span>
+                            <span class="trend down">↘ 2.1%</span>
+                        </div>
+                        <div class="insight-card">
+                            <h4>Biodiversity Index</h4>
+                            <span class="value">8.7/10</span>
+                            <span class="trend up">↗ 1.5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources Section -->
+    <section class="data section" id="data">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Comprehensive Data Sources</h2>
+                <p class="section__description">
+                    Integrating multiple data streams for complete marine ecosystem understanding
+                </p>
+            </div>
+
+            <div class="data__grid grid">
+                <div class="data__source">
+                    <i class="fas fa-satellite"></i>
+                    <h4>Satellite Imagery</h4>
+                    <p>High-resolution ocean surface monitoring</p>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-anchor"></i>
+                    <h4>Sensor Networks</h4>
+                    <p>Deep ocean monitoring buoys and stations</p>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-ship"></i>
+                    <h4>Research Vessels</h4>
+                    <p>Scientific expedition data collection</p>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-microscope"></i>
+                    <h4>Laboratory Analysis</h4>
+                    <p>Molecular and chemical sample testing</p>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-database"></i>
+                    <h4>Historical Records</h4>
+                    <p>Decades of marine research archives</p>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-users"></i>
+                    <h4>Citizen Science</h4>
+                    <p>Community-contributed observations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ocean Data Explorer Section -->
+    <section class="explorer section" id="explorer">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Ocean Data Explorer</h2>
+                <p class="section__description">
+                    Interactive exploration of our comprehensive ocean dataset with 25+ regions
+                </p>
+            </div>
+
+            <!-- Data Overview Stats -->
+            <div class="explorer__stats grid">
+                <div class="insight-card">
+                    <h4>Ocean Regions</h4>
+                    <span class="value" id="mainTotalRegions">25</span>
+                    <span class="trend up">Global Coverage</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Average Temperature</h4>
+                    <span class="value" id="mainAvgTemp">18.2°C</span>
+                    <span class="trend up">Real-time Data</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Total Fish Species</h4>
+                    <span class="value" id="mainTotalSpecies">30,847</span>
+                    <span class="trend up">Species Tracked</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Conservation Areas</h4>
+                    <span class="value">100%</span>
+                    <span class="trend up">Protected Status</span>
+                </div>
+            </div>
+
+            <!-- Quick Data Actions -->
+            <div class="section__header">
+                <h3 class="explorer__subtitle">Explore Ocean Data</h3>
+            </div>
+
+            <div class="explorer__grid grid">
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('What is the warmest ocean region?')">
+                    <div class="card__icon">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                    <h3 class="card__title">Temperature Analysis</h3>
+                    <p class="card__description">
+                        Explore temperature variations across different ocean regions and identify climate patterns.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('Show me biodiversity hotspots')">
+                    <div class="card__icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="card__title">Biodiversity Hotspots</h3>
+                    <p class="card__description">
+                        Discover regions with the highest marine biodiversity and species concentration.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('Which regions have the most fish species?')">
+                    <div class="card__icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <h3 class="card__title">Fish Diversity</h3>
+                    <p class="card__description">
+                        Analyze fish species distribution and identify the most diverse marine ecosystems.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('Show conservation status by ocean')">
+                    <div class="card__icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="card__title">Conservation Status</h3>
+                    <p class="card__description">
+                        Examine conservation priorities and endangered species across ocean regions.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('Compare Pacific vs Atlantic data')">
+                    <div class="card__icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="card__title">Ocean Comparisons</h3>
+                    <p class="card__description">
+                        Compare different oceans across temperature, biodiversity, and fisheries metrics.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="platform__card" style="cursor: pointer;"
+                    onclick="openChatbotWith('Show fishing quotas by region')">
+                    <div class="card__icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="card__title">Fisheries Data</h3>
+                    <p class="card__description">
+                        Access fishing quotas, sustainability ratings, and marine resource data.
+                    </p>
+                    <div class="card__link">
+                        Ask AI <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table Preview -->
+            <div class="explorer__table-section">
+                <div class="section__header">
+                    <h3 class="explorer__subtitle">Sample Ocean Data</h3>
+                    <p class="explorer__table-description">Preview of our comprehensive ocean dataset</p>
+                </div>
+
+                <div class="explorer__table-container">
+                    <table class="data-table" id="oceanDataTable">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Ocean</th>
+                                <th>Temperature (°C)</th>
+                                <th>Fish Species</th>
+                                <th>Biodiversity Index</th>
+                                <th>Conservation Status</th>
+                                <th>Fishing Quota (tons)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="oceanDataBody">
+                            <!-- Data will be loaded here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="explorer__actions">
+                    <button class="btn btn--primary" onclick="openChatbot()">
+                        <i class="fas fa-fish"></i>
+                        Ask Aqua About This Data
+                    </button>
+                    <button class="btn btn--secondary" onclick="showAllData()">
+                        <i class="fas fa-table"></i>
+                        View Complete Dataset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications section" id="applications">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">OCERA Applications</h2>
+                <p class="section__description">
+                    Explore our powerful web applications designed for marine data management and species analysis
+                </p>
+            </div>
+
+            <div class="applications__grid grid">
+                <div class="application__card">
+                    <div class="app__icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="app__content">
+                        <h3 class="app__title">Data Ingestion Portal</h3>
+                        <p class="app__description">
+                            Comprehensive data management system for uploading, processing, and organizing marine
+                            datasets.
+                            Features advanced data validation, batch processing, and real-time monitoring capabilities.
+                        </p>
+                        <div class="app__features">
+                            <span class="feature-tag">
+                                <i class="fas fa-upload"></i>
+                                Data Upload
+                            </span>
+                            <span class="feature-tag">
+                                <i class="fas fa-check-circle"></i>
+                                Validation
+                            </span>
+                            <span class="feature-tag">
+                                <i class="fas fa-chart-line"></i>
+                                Analytics
+                            </span>
+                        </div>
+                        <div class="app__actions">
+                            <a href="oceanai.backend/data-ingestion-portal.html" class="btn btn--primary"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Launch Portal
+                            </a>
+                            <button class="btn btn--secondary" onclick="showAppPreview('data-ingestion')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="application__card">
+                    <div class="app__icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="app__content">
+                        <h3 class="app__title">OceraMarine</h3>
+                        <p class="app__description">
+                            Advanced marine species analysis platform with AI-powered identification, habitat mapping,
+                            and conservation status tracking. Interactive visualization and research tools included.
+                        </p>
+                        <div class="app__features">
+                            <span class="feature-tag">
+                                <i class="fas fa-fish"></i>
+                                Species ID
+                            </span>
+                            <span class="feature-tag">
+                                <i class="fas fa-map-marked-alt"></i>
+                                Habitat Map
+                            </span>
+                            <span class="feature-tag">
+                                <i class="fas fa-brain"></i>
+                                AI Analysis
+                            </span>
+                        </div>
+                        <div class="app__actions">
+                            <a href="oceanai.backend/marine_prototype_updated.html" class="btn btn--primary"
+                                target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Launch App
+                            </a>
+                            <button class="btn btn--secondary" onclick="showAppPreview('marine-prototype')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Preview Modal -->
+            <div class="app-preview-modal" id="appPreviewModal">
+                <div class="modal__overlay" onclick="closeAppPreview()"></div>
+                <div class="modal__content">
+                    <div class="modal__header">
+                        <h3 id="previewTitle">Application Preview</h3>
+                        <button class="modal__close" onclick="closeAppPreview()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal__body">
+                        <iframe id="previewFrame" src="" frameborder="0"></iframe>
+                    </div>
+                    <div class="modal__footer">
+                        <button class="btn btn--primary" onclick="openFullApp()">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Full Application
+                        </button>
+                        <button class="btn btn--secondary" onclick="closeAppPreview()">
+                            Close Preview
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+        <div class="container">
+            <div class="about__container-simple">
+                <div class="about__content-center">
+                    <h2 class="section__title">About OCERA</h2>
+                    <div class="about__description-box">
+                        <p class="about__main-text">
+                            OCERA is an innovative AI-driven ocean data platform that revolutionizes marine research and
+                            conservation efforts through intelligent data analysis and insights.
+                        </p>
+
+                        <div class="about__team-motto">
+                            <p class="team__motto-text">
+                                <span class="name-letter" data-name="Nishant" title="Nishant"><strong
+                                        title="Nishant">N</strong></span>avigators
+                                <span class="name-letter" data-name="Shriyansh" title="Shriyansh"><strong
+                                        title="Shriyansh">S</strong></span>haping
+                                <span class="name-letter" data-name="Yog" title="Yog"><strong
+                                        title="Yog">Y</strong></span>our
+                                <span class="name-letter" data-name="Tanishka" title="Tanishka"><strong
+                                        title="Tanishka">T</strong></span>ech-<span class="name-letter" data-name="Dev"
+                                    title="Dev"><strong title="Dev">D</strong></span>riven
+                                <span class="name-letter" data-name="Anamika" title="Anamika"><strong
+                                        title="Anamika">A</strong></span>I.
+                            </p>
+                            <p class="team__motto-description">
+                                Our team of dedicated navigators guides the future of marine technology, shaping
+                                intelligent solutions that drive oceanographic innovation forward.
+                            </p>
+                            <div class="team__tooltip" id="nameTooltip"></div>
+                        </div>
+
+                        <div class="about__project-info">
+                            <div class="project__badge">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>SIH 2025 Project</span>
+                            </div>
+                            <p class="about__creators">
+                                Created by talented students of <strong>DYPIU, Akurdi, Pune</strong> for their Smart
+                                India Hackathon 2025 project, combining cutting-edge technology with marine science to
+                                address real-world oceanographic challenges.
+                            </p>
+                        </div>
+                        <div class="about__mission">
+                            <h4>Our Mission</h4>
+                            <p>Empowering researchers, conservationists, and policymakers with AI-powered insights to
+                                protect and preserve our ocean ecosystems for future generations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__compact">
+                <div class="footer__main">
+                    <div class="footer__logo">
+                        <i class="fas fa-wave-square"></i>
+                        <span>OCERA</span>
+                    </div>
+                    <p class="footer__description">
+                        Advancing marine science through AI and data-driven insights.
+                    </p>
+                </div>
+
+                <div class="footer__links-compact">
+                    <a href="pages/oceanographic.html" class="footer__link">Oceanographic</a>
+                    <a href="pages/fisheries.html" class="footer__link">Fisheries</a>
+                    <a href="pages/biodiversity.html" class="footer__link">Biodiversity</a>
+                    <a href="#about" class="footer__link">About</a>
+                </div>
+
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    © 2025 OCERA. All rights reserved. •
+                    <a href="#" class="footer__link">Privacy</a> •
+                    <a href="#" class="footer__link">Terms</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top Button -->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" id="chatbotFloat" onclick="toggleChatbot()">
+        <i class="fas fa-fish"></i>
+        <span class="chatbot-tooltip">Chat with Aqua - Ocean AI Assistant</span>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <div class="bot-avatar">
+                    <i class="fas fa-fish"></i>
+                </div>
+                <div>
+                    <h3>Aqua - Ocean AI</h3>
+                    <span class="status-indicator">
+                        <i class="fas fa-circle"></i> Online
+                    </span>
+                </div>
+            </div>
+            <div class="chatbot-actions">
+                <button onclick="minimizeChatbot()" title="Minimize">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button onclick="closeChatbot()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chatbot-messages" id="popupChatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-fish"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hi! I'm Aqua, your Ocean AI Assistant 🐙 I can help you analyze data from 25 ocean regions.</p>
+                    <p>Try asking me:</p>
+                    <ul>
+                        <li>"What's the warmest ocean region?"</li>
+                        <li>"Show biodiversity hotspots"</li>
+                        <li>"Compare Pacific vs Atlantic"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-quick-actions">
+            <button class="quick-action-btn" onclick="sendPopupMessage('What is the warmest ocean region?')">
+                <i class="fas fa-temperature-high"></i> Warmest Regions
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Show me biodiversity hotspots')">
+                <i class="fas fa-seedling"></i> Biodiversity
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Compare Pacific vs Atlantic data')">
+                <i class="fas fa-balance-scale"></i> Compare Oceans
+            </button>
+        </div>
+
+        <div class="chatbot-input">
+            <input type="text" id="popupMessageInput" placeholder="Ask about ocean data..."
+                onkeypress="handlePopupKeyPress(event)">
+            <button onclick="sendPopupMessage()" id="popupSendButton">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <!-- Visualization Panel for Popup -->
+        <div class="popup-viz-panel" id="popupVizPanel" style="display: none;">
+            <div class="viz-header">
+                <h4>Data Visualization</h4>
+                <button onclick="closePopupViz()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="viz-content">
+                <canvas id="popupChart" width="350" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main-fixed.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/popup-chatbot.js"></script>
+</body>
+
+</html>

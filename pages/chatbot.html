@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Data Assistant - OceanAI Platform</title>
+    <meta name="description" content="AI-powered chatbot assistant for ocean, fisheries, and biodiversity data queries">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OceanAI</span>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="../index.html" class="nav__link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="oceanographic.html" class="nav__link">Oceanographic</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="fisheries.html" class="nav__link">Fisheries</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="biodiversity.html" class="nav__link">Biodiversity</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="chatbot.html" class="nav__link active-link">AI Assistant</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero section" style="padding-top: calc(var(--header-height) + 2rem); padding-bottom: 2rem;">
+            <div class="container">
+                <div class="hero__data" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <h1 class="hero__title">
+                        <span class="gradient-text">Aqua</span> - Ocean AI Assistant
+                    </h1>
+                    <p class="hero__description">
+                        Ask me anything about ocean conditions, fisheries data, biodiversity, and marine ecosystems. 
+                        I can analyze our comprehensive dataset and provide insights in real-time.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot Interface -->
+        <section class="chatbot-section">
+            <div class="container">
+                <div class="chatbot-container">
+                    <!-- Data Overview Panel -->
+                    <div class="data-panel">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-database"></i> Data Overview</h3>
+                            <div class="data-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number" id="totalRecords">25</span>
+                                    <span class="stat-label">Ocean Regions</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number" id="avgTemp">18.2°C</span>
+                                    <span class="stat-label">Avg Temperature</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number" id="totalSpecies">30,847</span>
+                                    <span class="stat-label">Fish Species</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-actions">
+                            <h4>Quick Questions</h4>
+                            <div class="action-buttons">
+                                <button class="action-btn" onclick="askQuestion('What is the warmest ocean region?')">
+                                    <i class="fas fa-temperature-high"></i>
+                                    Warmest Regions
+                                </button>
+                                <button class="action-btn" onclick="askQuestion('Show me biodiversity hotspots')">
+                                    <i class="fas fa-seedling"></i>
+                                    Biodiversity Hotspots
+                                </button>
+                                <button class="action-btn" onclick="askQuestion('Which regions have the most fish species?')">
+                                    <i class="fas fa-fish"></i>
+                                    Fish Diversity
+                                </button>
+                                <button class="action-btn" onclick="askQuestion('Show conservation status by ocean')">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Conservation Status
+                                </button>
+                                <button class="action-btn" onclick="askQuestion('Compare Pacific vs Atlantic data')">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Compare Oceans
+                                </button>
+                                <button class="action-btn" onclick="askQuestion('Show me endangered species data')">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Endangered Species
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="data-filters">
+                            <h4>Filter Data</h4>
+                            <div class="filter-group">
+                                <label for="oceanFilter">Ocean:</label>
+                                <select id="oceanFilter" onchange="applyFilters()">
+                                    <option value="">All Oceans</option>
+                                    <option value="Pacific">Pacific</option>
+                                    <option value="Atlantic">Atlantic</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Arctic">Arctic</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="tempFilter">Temperature Range:</label>
+                                <select id="tempFilter" onchange="applyFilters()">
+                                    <option value="">All Temperatures</option>
+                                    <option value="cold">Cold (0-10°C)</option>
+                                    <option value="moderate">Moderate (10-20°C)</option>
+                                    <option value="warm">Warm (20-30°C)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Interface -->
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="chat-info">
+                                <div class="bot-avatar">
+                                    <i class="fas fa-fish"></i>
+                                </div>
+                                <div>
+                                    <h3>Aqua - Ocean AI</h3>
+                                    <span class="status-indicator">
+                                        <i class="fas fa-circle"></i> Online
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <button onclick="clearChat()" title="Clear Chat">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button onclick="downloadData()" title="Download Data">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message bot-message">
+                                <div class="message-avatar">
+                                    <i class="fas fa-fish"></i>
+                                </div>
+                                <div class="message-content">
+                                    <p>Hello! I'm Aqua, your Ocean AI Assistant 🐙 I can help you analyze data from 25 ocean regions covering temperature, fisheries, biodiversity, and conservation information.</p>
+                                    <p>Try asking me questions like:</p>
+                                    <ul>
+                                        <li>"What's the temperature in the Pacific Ocean?"</li>
+                                        <li>"Show me the most biodiverse regions"</li>
+                                        <li>"Which areas need conservation attention?"</li>
+                                        <li>"Compare fishing quotas across oceans"</li>
+                                    </ul>
+                                </div>
+                                <div class="message-time">Just now</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-container">
+                            <div class="chat-input">
+                                <input 
+                                    type="text" 
+                                    id="messageInput" 
+                                    placeholder="Ask about ocean data, fisheries, biodiversity, temperature..."
+                                    onkeypress="handleKeyPress(event)"
+                                >
+                                <button id="sendButton" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="input-suggestions" id="suggestions">
+                                <!-- Dynamic suggestions will appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Visualization Panel -->
+                    <div class="viz-panel" id="vizPanel" style="display: none;">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-chart-bar"></i> Data Visualization</h3>
+                            <button onclick="closeVizPanel()" class="close-btn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="viz-content">
+                            <canvas id="dynamicChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__container grid">
+                <div class="footer__content">
+                    <div class="footer__logo">
+                        <i class="fas fa-wave-square"></i>
+                        <span>OceanAI</span>
+                    </div>
+                    <p class="footer__description">
+                        Advancing marine science through artificial intelligence and data-driven insights.
+                    </p>
+                    <div class="footer__social">
+                        <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer__links">
+                    <div class="footer__group">
+                        <h4 class="footer__title">Platform</h4>
+                        <ul class="footer__list">
+                            <li><a href="oceanographic.html" class="footer__link">Oceanographic</a></li>
+                            <li><a href="fisheries.html" class="footer__link">Fisheries</a></li>
+                            <li><a href="biodiversity.html" class="footer__link">Biodiversity</a></li>
+                            <li><a href="chatbot.html" class="footer__link">AI Assistant</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Resources</h4>
+                        <ul class="footer__list">
+                            <li><a href="#" class="footer__link">Research Papers</a></li>
+                            <li><a href="#" class="footer__link">Case Studies</a></li>
+                            <li><a href="#" class="footer__link">Documentation</a></li>
+                            <li><a href="#" class="footer__link">Tutorials</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Company</h4>
+                        <ul class="footer__list">
+                            <li><a href="../index.html#about" class="footer__link">About Us</a></li>
+                            <li><a href="#" class="footer__link">Careers</a></li>
+                            <li><a href="#" class="footer__link">News</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    © 2025 OCERA. All rights reserved. | 
+                    <a href="#" class="footer__link">Privacy Policy</a> | 
+                    <a href="#" class="footer__link">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top Button -->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/chatbot.js"></script>
+</body>
+</html>

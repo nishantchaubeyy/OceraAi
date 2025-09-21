@@ -1,0 +1,11 @@
+species_name,scientific_name,habitat,depth_range,temperature_range,distribution,conservation_status,diet,size,weight
+Great White Shark,Carcharodon carcharias,Coastal and offshore waters,0-1200m,12-24°C,Temperate and subtropical waters worldwide,Vulnerable,Fish and marine mammals,4.6-6.1m,680-1100kg
+Blue Whale,Balaenoptera musculus,Open ocean,0-500m,5-20°C,All oceans worldwide,Endangered,Krill,24-27m,150-180 tonnes
+Clownfish,Amphiprion ocellatus,Coral reefs,1-15m,24-28°C,Indo-Pacific,Least Concern,Algae and zooplankton,8-11cm,10-15g
+Manta Ray,Mobula birostris,Open ocean and coastal waters,0-1000m,18-29°C,Tropical and subtropical waters,Vulnerable,Plankton and small fish,3-7m wingspan,1350-2000kg
+Sea Turtle (Green),Chelonia mydas,Coastal waters and open ocean,0-200m,20-30°C,Tropical and subtropical waters worldwide,Endangered,Seagrass and algae,1-1.5m,68-190kg
+Octopus (Giant Pacific),Enteroctopus dofleini,Rocky reefs and caves,0-2000m,3-10°C,North Pacific Ocean,Least Concern,Crabs and fish,4.3m arm span,15-71kg
+Hammerhead Shark,Sphyrna mokarran,Coastal and continental shelf waters,0-80m,20-28°C,Tropical waters worldwide,Critically Endangered,Fish and rays,3.5-6m,230-450kg
+Dolphin (Bottlenose),Tursiops truncatus,Coastal and offshore waters,0-500m,10-32°C,Worldwide in temperate and tropical waters,Least Concern,Fish and squid,2-4m,150-650kg
+Jellyfish (Moon),Aurelia aurita,Coastal waters,0-40m,6-31°C,Worldwide,Least Concern,Plankton,25-40cm diameter,0.5-2kg
+Seahorse,Hippocampus,Shallow coastal waters,0-30m,20-28°C,Tropical and temperate waters,Vulnerable,Small crustaceans,2-35cm,1-10g

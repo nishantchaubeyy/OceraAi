@@ -1,0 +1,73 @@
+/* ===== DESKTOP STYLES ===== */
+@media screen and (min-width: 769px) {
+    /* Desktop Navigation */
+    .nav__toggle,
+    .nav__close {
+        display: none;
+    }
+    
+    .nav__menu {
+        position: static;
+        width: auto;
+        height: auto;
+        background: transparent;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .nav__list {
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-lg);
+    }
+    
+    .nav__link {
+        display: block;
+        padding: 0.5rem 0;
+    }
+    
+    .nav__link i {
+        display: none;
+    }
+    
+    /* Desktop Hero */
+    .hero__container {
+        max-width: 800px;
+        padding: 0 2rem;
+    }
+    
+    .hero__title {
+        font-size: var(--h1-size);
+    }
+    
+    .hero__description {
+        font-size: 1.25rem;
+        max-width: 600px;
+    }
+    
+    .hero__buttons {
+        flex-direction: row;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+    
+    .hero__stats {
+        flex-direction: row;
+        gap: 3rem;
+    }
+    
+    /* Desktop Sections */
+    .platform__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .insights__container,
+    .about__container,
+    .contact__container {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .data__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

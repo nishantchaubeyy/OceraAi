@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanographic Data - OceanAI Platform</title>
+    <meta name="description" content="Comprehensive oceanographic data monitoring and analysis platform for marine research">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OceanAI</span>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="../index.html" class="nav__link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="oceanographic.html" class="nav__link active-link">Oceanographic</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="fisheries.html" class="nav__link">Fisheries</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="biodiversity.html" class="nav__link">Biodiversity</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section">
+        <div class="hero__container container grid">
+            <div class="hero__data">
+                <h1 class="hero__title">
+                    <span class="gradient-text">Oceanographic</span> Data Platform
+                </h1>
+                <p class="hero__description">
+                    Advanced monitoring and analysis of ocean conditions, temperature patterns, 
+                    currents, and environmental parameters using cutting-edge sensors and AI technology.
+                </p>
+                <div class="hero__buttons">
+                    <a href="#dashboard" class="btn btn--primary">
+                        <i class="fas fa-chart-line"></i>
+                        View Dashboard
+                    </a>
+                    <a href="#data-sources" class="btn btn--secondary">
+                        <i class="fas fa-database"></i>
+                        Data Sources
+                    </a>
+                </div>
+            </div>
+            <div class="hero__image">
+                <div class="hero__visual">
+                    <div class="floating-card card--1">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span>Temperature</span>
+                        <strong>22.1°C</strong>
+                    </div>
+                    <div class="floating-card card--2">
+                        <i class="fas fa-tint"></i>
+                        <span>Salinity</span>
+                        <strong>35.2 PSU</strong>
+                    </div>
+                    <div class="floating-card card--3">
+                        <i class="fas fa-wind"></i>
+                        <span>Current Speed</span>
+                        <strong>2.3 m/s</strong>
+                    </div>
+                    <div class="hero__globe">
+                        <i class="fas fa-water"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="section" id="dashboard">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Real-Time Ocean Monitoring Dashboard</h2>
+                <p class="section__description">
+                    Live data from our global network of ocean sensors and monitoring stations
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 3rem;">
+                <div class="insight-card">
+                    <h4>Global Ocean Temperature</h4>
+                    <span class="value">21.8°C</span>
+                    <span class="trend up">↗ 0.3°C from last month</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Sea Level</h4>
+                    <span class="value">3.2mm</span>
+                    <span class="trend up">↗ Annual rise</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Ocean pH</h4>
+                    <span class="value">8.1</span>
+                    <span class="trend down">↘ 0.02 from baseline</span>
+                </div>
+                <div class="insight-card">
+                    <h4>Active Sensors</h4>
+                    <span class="value">1,247</span>
+                    <span class="trend up">↗ 98% operational</span>
+                </div>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--black);">Ocean Temperature Trends</h3>
+                    <canvas id="temperatureChart" height="300"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--black);">Regional Distribution</h3>
+                    <canvas id="regionChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parameters Section -->
+    <section class="section" style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Key Oceanographic Parameters</h2>
+                <p class="section__description">
+                    Comprehensive monitoring of essential ocean variables
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h3 class="card__title">Temperature Monitoring</h3>
+                    <p class="card__description">
+                        Continuous measurement of sea surface and subsurface temperatures 
+                        across multiple depths and geographic regions.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Multi-depth profiling</li>
+                        <li><i class="fas fa-check"></i> Real-time data transmission</li>
+                        <li><i class="fas fa-check"></i> Thermal stratification analysis</li>
+                        <li><i class="fas fa-check"></i> Anomaly detection algorithms</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3 class="card__title">Salinity & Conductivity</h3>
+                    <p class="card__description">
+                        Precise measurement of ocean salinity patterns and electrical 
+                        conductivity to understand water mass movements.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> CTD sensor integration</li>
+                        <li><i class="fas fa-check"></i> Water mass identification</li>
+                        <li><i class="fas fa-check"></i> Mixing layer analysis</li>
+                        <li><i class="fas fa-check"></i> Freshwater flux monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3 class="card__title">Ocean Currents</h3>
+                    <p class="card__description">
+                        Advanced current velocity and direction measurement using 
+                        acoustic Doppler current profilers and drift buoys.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> ADCP measurements</li>
+                        <li><i class="fas fa-check"></i> Surface drift tracking</li>
+                        <li><i class="fas fa-check"></i> Tidal current analysis</li>
+                        <li><i class="fas fa-check"></i> Circulation modeling</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h3 class="card__title">Chemical Properties</h3>
+                    <p class="card__description">
+                        Monitoring of dissolved oxygen, pH levels, nutrients, and 
+                        other chemical indicators of ocean health.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> pH and acidity monitoring</li>
+                        <li><i class="fas fa-check"></i> Dissolved oxygen levels</li>
+                        <li><i class="fas fa-check"></i> Nutrient concentration</li>
+                        <li><i class="fas fa-check"></i> Carbon cycle tracking</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <h3 class="card__title">Satellite Observations</h3>
+                    <p class="card__description">
+                        Integration of satellite-based measurements for large-scale 
+                        ocean surface monitoring and validation.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Sea surface temperature</li>
+                        <li><i class="fas fa-check"></i> Chlorophyll concentration</li>
+                        <li><i class="fas fa-check"></i> Sea level altimetry</li>
+                        <li><i class="fas fa-check"></i> Ocean color analysis</li>
+                    </ul>
+                </div>
+
+                <div class="platform__card">
+                    <div class="card__icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <h3 class="card__title">Predictive Modeling</h3>
+                    <p class="card__description">
+                        AI-powered forecasting models for ocean conditions, 
+                        extreme events, and long-term climate trends.
+                    </p>
+                    <ul class="card__features">
+                        <li><i class="fas fa-check"></i> Machine learning forecasts</li>
+                        <li><i class="fas fa-check"></i> Climate change projections</li>
+                        <li><i class="fas fa-check"></i> Extreme event prediction</li>
+                        <li><i class="fas fa-check"></i> Uncertainty quantification</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources Section -->
+    <section class="section" id="data-sources">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Global Data Network</h2>
+                <p class="section__description">
+                    Our comprehensive monitoring network spans the globe
+                </p>
+            </div>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="data__source">
+                    <i class="fas fa-anchor"></i>
+                    <h4>Moored Buoys</h4>
+                    <p>Fixed-location deep ocean monitoring stations</p>
+                    <strong style="color: var(--primary-color);">847 Active</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-ship"></i>
+                    <h4>Research Vessels</h4>
+                    <p>Mobile platforms for detailed oceanographic surveys</p>
+                    <strong style="color: var(--primary-color);">23 Vessels</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-satellite-dish"></i>
+                    <h4>Autonomous Floats</h4>
+                    <p>Self-deploying profiling instruments</p>
+                    <strong style="color: var(--primary-color);">3,245 Deployed</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-robot"></i>
+                    <h4>Underwater Gliders</h4>
+                    <p>Long-range autonomous underwater vehicles</p>
+                    <strong style="color: var(--primary-color);">156 Operating</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <h4>Coastal Stations</h4>
+                    <p>Shore-based monitoring and data relay</p>
+                    <strong style="color: var(--primary-color);">289 Stations</strong>
+                </div>
+                <div class="data__source">
+                    <i class="fas fa-plane"></i>
+                    <h4>Airborne Sensors</h4>
+                    <p>Aircraft-mounted observation systems</p>
+                    <strong style="color: var(--primary-color);">12 Aircraft</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background: var(--gradient-primary); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">Access Oceanographic Data</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
+                Get real-time access to our comprehensive oceanographic dataset
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#" class="btn" style="background: white; color: var(--primary-color);">
+                    <i class="fas fa-download"></i>
+                    Download Data
+                </a>
+                <a href="#" class="btn" style="background: transparent; color: white; border: 2px solid white;">
+                    <i class="fas fa-code"></i>
+                    API Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__container grid">
+                <div class="footer__content">
+                    <div class="footer__logo">
+                        <i class="fas fa-wave-square"></i>
+                        <span>OceanAI</span>
+                    </div>
+                    <p class="footer__description">
+                        Advancing marine science through artificial intelligence and data-driven insights.
+                    </p>
+                    <div class="footer__social">
+                        <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="footer__social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer__links">
+                    <div class="footer__group">
+                        <h4 class="footer__title">Platform</h4>
+                        <ul class="footer__list">
+                            <li><a href="oceanographic.html" class="footer__link">Oceanographic</a></li>
+                            <li><a href="fisheries.html" class="footer__link">Fisheries</a></li>
+                            <li><a href="biodiversity.html" class="footer__link">Biodiversity</a></li>
+                            <li><a href="#" class="footer__link">API Documentation</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Resources</h4>
+                        <ul class="footer__list">
+                            <li><a href="#" class="footer__link">Research Papers</a></li>
+                            <li><a href="#" class="footer__link">Case Studies</a></li>
+                            <li><a href="#" class="footer__link">Documentation</a></li>
+                            <li><a href="#" class="footer__link">Tutorials</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer__group">
+                        <h4 class="footer__title">Company</h4>
+                        <ul class="footer__list">
+                            <li><a href="../index.html#about" class="footer__link">About Us</a></li>
+                            <li><a href="#" class="footer__link">Careers</a></li>
+                            <li><a href="#" class="footer__link">News</a></li>
+                            <li><a href="../index.html#contact" class="footer__link">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    © 2024 OceanAI. All rights reserved. | 
+                    <a href="#" class="footer__link">Privacy Policy</a> | 
+                    <a href="#" class="footer__link">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top Button -->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" id="chatbotFloat" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+        <span class="chatbot-tooltip">Ask AI about Ocean Data</span>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>Ocean Data Assistant</h3>
+                    <span class="status-indicator">
+                        <i class="fas fa-circle"></i> Online
+                    </span>
+                </div>
+            </div>
+            <div class="chatbot-actions">
+                <button onclick="minimizeChatbot()" title="Minimize">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button onclick="closeChatbot()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chatbot-messages" id="popupChatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hi! I can help analyze oceanographic data like temperature, salinity, and water quality.</p>
+                    <p>Try asking:</p>
+                    <ul>
+                        <li>"What's the warmest ocean region?"</li>
+                        <li>"Show temperature trends"</li>
+                        <li>"Compare ocean temperatures"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-quick-actions">
+            <button class="quick-action-btn" onclick="sendPopupMessage('What is the warmest ocean region?')">
+                <i class="fas fa-thermometer-hot"></i> Temperature
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Show water quality data')">
+                <i class="fas fa-tint"></i> Water Quality
+            </button>
+            <button class="quick-action-btn" onclick="sendPopupMessage('Compare ocean salinity')">
+                <i class="fas fa-balance-scale"></i> Compare Data
+            </button>
+        </div>
+
+        <div class="chatbot-input">
+            <input type="text" id="popupMessageInput" placeholder="Ask about oceanographic data..." 
+                   onkeypress="handlePopupKeyPress(event)">
+            <button onclick="sendPopupMessage()" id="popupSendButton">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div class="popup-viz-panel" id="popupVizPanel" style="display: none;">
+            <div class="viz-header">
+                <h4>Data Visualization</h4>
+                <button onclick="closePopupViz()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="viz-content">
+                <canvas id="popupChart" width="350" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/chatbot.js"></script>
+    <script src="../js/popup-chatbot.js"></script>
+    <script>
+        // Additional chart initialization for this page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Temperature Chart
+            const tempCtx = document.getElementById('temperatureChart');
+            if (tempCtx) {
+                new Chart(tempCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Surface Temperature (°C)',
+                            data: [18.2, 18.8, 19.5, 20.1, 21.3, 22.0, 23.1, 23.5, 22.8, 21.4, 20.1, 18.9],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 15,
+                                max: 25
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Regional Distribution Chart
+            const regionCtx = document.getElementById('regionChart');
+            if (regionCtx) {
+                new Chart(regionCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pacific', 'Atlantic', 'Indian', 'Arctic', 'Southern'],
+                        datasets: [{
+                            data: [35, 28, 20, 9, 8],
+                            backgroundColor: [
+                                '#3b82f6',
+                                '#06b6d4',
+                                '#10b981',
+                                '#f59e0b',
+                                '#8b5cf6'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

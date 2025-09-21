@@ -1,0 +1,58 @@
+[
+  {
+    "species_name": "Clownfish",
+    "scientific_name": "Amphiprion ocellatus",
+    "habitat": "Coral reefs and anemones",
+    "depth_range": "1-15m",
+    "temperature_range": "24-28°C",
+    "distribution": "Indo-Pacific Ocean",
+    "conservation_status": "Least Concern",
+    "diet": "Algae, zooplankton, and small crustaceans",
+    "size": "8-11cm",
+    "characteristics": ["Symbiotic relationship with anemones", "Bright orange coloration", "Sequential hermaphrodite"],
+    "threats": ["Aquarium trade", "Coral reef destruction"],
+    "interesting_facts": [
+      "Can change sex from male to female",
+      "Immune to anemone stings",
+      "Featured in the movie Finding Nemo"
+    ]
+  },
+  {
+    "species_name": "Manta Ray",
+    "scientific_name": "Mobula birostris",
+    "habitat": "Open ocean and coastal waters",
+    "depth_range": "0-1000m",
+    "temperature_range": "18-29°C",
+    "distribution": "Tropical and subtropical waters worldwide",
+    "conservation_status": "Vulnerable",
+    "diet": "Plankton, small fish, and krill",
+    "size": "3-7m wingspan",
+    "weight": "1350-2000kg",
+    "characteristics": ["Largest ray species", "Highly intelligent", "Filter feeder"],
+    "threats": ["Fishing pressure", "Boat strikes", "Pollution"],
+    "interesting_facts": [
+      "Has the largest brain of any fish",
+      "Can live up to 50 years",
+      "Performs barrel rolls while feeding"
+    ]
+  },
+  {
+    "species_name": "Sea Turtle (Hawksbill)",
+    "scientific_name": "Eretmochelys imbricata",
+    "habitat": "Coral reefs and rocky areas",
+    "depth_range": "0-70m",
+    "temperature_range": "20-30°C",
+    "distribution": "Tropical oceans worldwide",
+    "conservation_status": "Critically Endangered",
+    "diet": "Sponges, jellyfish, and sea anemones",
+    "size": "60-90cm shell length",
+    "weight": "45-90kg",
+    "characteristics": ["Distinctive hawk-like beak", "Beautiful shell pattern", "Excellent divers"],
+    "threats": ["Illegal trade", "Habitat loss", "Climate change", "Plastic pollution"],
+    "interesting_facts": [
+      "Shell was historically used for jewelry",
+      "Can hold breath for up to 45 minutes",
+      "Navigate using Earth's magnetic field"
+    ]
+  }
+]

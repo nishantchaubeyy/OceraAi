@@ -1,0 +1,26 @@
+Ocean,Region,Temperature_C,Salinity_PSU,Fish_Species_Count,Fish_Population_Millions,Biodiversity_Index,Primary_Fish_Species,Conservation_Status,Coral_Coverage_Percent,Plankton_Density,Water_Quality_Index,Fishing_Quota_Tons,Sustainable_Fishing_Rating,Endangered_Species_Count,Marine_Protected_Area,Depth_Meters,Coordinates_Lat,Coordinates_Lon,Data_Collection_Date
+Pacific,North Pacific,12.5,34.2,1547,850.3,8.7,"Salmon,Tuna,Cod",Moderate Risk,25.4,High,7.8,125000,B+,23,Yes,2500,45.2,-120.5,2024-01-15
+Atlantic,North Atlantic,8.3,35.1,1234,645.2,7.9,"Cod,Herring,Mackerel",Good,18.7,Medium,8.2,98000,A-,18,Yes,3200,52.1,-25.8,2024-01-20
+Pacific,South Pacific,24.1,34.8,1876,923.7,9.2,"Tuna,Mahi-mahi,Snapper",High Risk,45.8,Very High,7.1,87000,B,31,Yes,1800,-15.3,-150.2,2024-01-25
+Atlantic,South Atlantic,19.7,35.3,1345,567.8,8.1,"Tuna,Sardine,Anchovy",Moderate Risk,32.1,High,7.9,76000,B+,25,Yes,2800,-20.1,-10.4,2024-02-01
+Indian,Central Indian,26.8,34.6,1623,734.5,8.5,"Tuna,Skipjack,Yellowfin",High Risk,38.2,High,7.3,69000,B-,28,Yes,2200,-10.5,75.8,2024-02-05
+Arctic,Arctic Ocean,1.2,32.8,456,123.4,6.2,"Cod,Herring,Pollock",Critical Risk,5.2,Low,6.8,15000,C+,45,Yes,1200,78.2,-15.7,2024-02-10
+Pacific,Central Pacific,22.3,34.5,1698,812.6,8.9,"Tuna,Mahi-mahi,Marlin",Moderate Risk,52.3,Very High,8.1,92000,A-,19,Yes,3500,5.2,-160.1,2024-02-15
+Atlantic,Mediterranean,16.4,36.2,892,234.7,7.4,"Sardine,Anchovy,Tuna",High Risk,22.8,Medium,7.2,34000,C,38,Yes,1500,40.1,15.3,2024-02-20
+Pacific,Coral Triangle,28.5,34.1,2847,1245.8,9.8,"Grouper,Snapper,Wrasse",Very High Risk,78.9,Extremely High,8.9,45000,A,12,Yes,500,-2.1,125.4,2024-02-25
+Indian,Bay of Bengal,27.2,33.9,1456,678.3,8.3,"Hilsa,Pomfret,Mackerel",High Risk,28.7,High,7.6,58000,B,34,Yes,2100,18.5,88.2,2024-03-01
+Pacific,Bering Sea,3.8,33.2,734,456.7,7.1,"Pollock,Cod,Crab",Moderate Risk,8.4,Medium,7.8,145000,A-,22,Yes,2800,58.4,-165.3,2024-03-05
+Atlantic,Caribbean Sea,25.9,35.8,1234,389.2,8.4,"Grouper,Snapper,Parrotfish",High Risk,35.6,High,7.5,28000,B-,29,Yes,800,18.2,-75.6,2024-03-10
+Pacific,East Pacific,18.7,34.4,1123,523.9,7.8,"Anchoveta,Sardine,Tuna",Moderate Risk,15.2,Medium,7.9,156000,B+,21,Yes,3800,15.2,-95.4,2024-03-15
+Indian,Arabian Sea,24.6,35.5,1389,612.4,8.2,"Kingfish,Pomfret,Tuna",High Risk,21.3,Medium,7.4,47000,B,32,Yes,2600,15.8,65.2,2024-03-20
+Atlantic,Norwegian Sea,6.2,34.9,678,345.6,7.6,"Cod,Herring,Mackerel",Good,12.5,Medium,8.3,89000,A,16,Yes,2200,68.5,5.8,2024-03-25
+Pacific,Sea of Japan,11.8,34.3,945,434.2,7.7,"Salmon,Cod,Pollock",Moderate Risk,18.9,Medium,7.8,67000,B+,24,Yes,1800,40.2,135.7,2024-04-01
+Indian,Andaman Sea,28.1,33.8,1567,589.3,8.6,"Grouper,Snapper,Tuna",High Risk,42.1,High,7.7,23000,B-,27,Yes,1200,12.4,95.8,2024-04-05
+Pacific,Gulf of Alaska,7.9,33.5,823,567.8,7.9,"Salmon,Halibut,Cod",Good,16.7,Medium,8.1,78000,A-,19,Yes,2500,58.7,-145.2,2024-04-10
+Atlantic,Gulf of Mexico,23.4,36.1,1089,456.7,7.2,"Red Snapper,Grouper,Shrimp",High Risk,28.4,Medium,6.9,67000,C+,41,Yes,1600,26.8,-90.4,2024-04-15
+Pacific,Tasman Sea,16.8,34.7,1234,623.1,8.1,"Barramundi,Flathead,Tuna",Moderate Risk,31.2,High,8.0,45000,B+,23,Yes,2800,-35.6,155.8,2024-04-20
+Indian,Red Sea,26.7,40.1,1456,234.5,8.8,"Grouper,Parrotfish,Angelfish",Very High Risk,68.3,High,8.2,12000,B-,15,Yes,900,22.1,38.5,2024-04-25
+Pacific,Philippine Sea,27.3,34.2,1789,734.6,9.1,"Tuna,Grouper,Snapper",High Risk,58.7,Very High,8.3,34000,B,26,Yes,4200,15.8,130.2,2024-05-01
+Atlantic,Labrador Sea,4.1,34.1,567,289.4,6.9,"Cod,Shrimp,Crab",Moderate Risk,3.2,Low,7.6,45000,B+,38,Yes,3400,58.2,-55.7,2024-05-05
+Pacific,Yellow Sea,14.2,31.5,678,345.8,7.3,"Hairtail,Croaker,Flounder",High Risk,12.8,Medium,6.8,89000,C+,45,Yes,800,36.5,123.4,2024-05-10
+Indian,Persian Gulf,28.9,39.8,456,167.3,6.8,"Grouper,Emperor,Snapper",Critical Risk,15.7,Medium,6.5,23000,C,52,Yes,400,26.2,52.1,2024-05-15

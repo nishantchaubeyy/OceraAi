@@ -1,0 +1,13 @@
+{
+  "apiKey": "YOUR_GEMINI_API_KEY_HERE",
+  "instructions": {
+    "step1": "Replace YOUR_GEMINI_API_KEY_HERE with your actual Gemini API key",
+    "step2": "Save this file to your desktop or a secure location",
+    "step3": "In the Marine Platform, go to Settings > Data Management > Import API Key",
+    "step4": "Select this file to automatically configure your API key",
+    "getApiKey": "Get your API key from: https://makersuite.google.com/app/apikey"
+  },
+  "platform": "Marine Species Identification Platform",
+  "version": "1.0",
+  "created": "2025-01-21"
+}

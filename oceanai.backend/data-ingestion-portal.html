@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Ingestion Portal - OceanAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Ocean-inspired Color Palette */
+            --primary-color: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --secondary-color: #0891b2;
+            --secondary-light: #0ea5e9;
+            --secondary-dark: #0c4a6e;
+
+            /* Accent Colors */
+            --accent-blue: #06b6d4;
+            --accent-teal: #14b8a6;
+            --accent-green: #10b981;
+
+            /* Neutral Colors */
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --gray: #64748b;
+            --dark-gray: #334155;
+            --black: #0f172a;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            --gradient-ocean: linear-gradient(135deg, #1e40af 0%, #0891b2 50%, #14b8a6 100%);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --h1-size: 3.5rem;
+            --h2-size: 2.5rem;
+            --h3-size: 2rem;
+            --h4-size: 1.5rem;
+            --normal-size: 1rem;
+            --small-size: 0.875rem;
+            --smaller-size: 0.75rem;
+
+            /* Font Weights */
+            --font-light: 300;
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 6rem;
+
+            /* Shadows - Dark Mode Default */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 50%;
+
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-normal: 300ms ease;
+            --transition-slow: 500ms ease;
+
+            /* Z-index */
+            --z-tooltip: 10;
+            --z-fixed: 100;
+            --z-modal: 1000;
+
+            /* Container */
+            --container-width: 1200px;
+            --container-padding: 1rem;
+
+            /* Header Height */
+            --header-height: 4rem;
+
+            /* Theme Colors - Default Dark Mode */
+            --bg-color: var(--black);
+            --text-color: var(--white);
+            --text-secondary: #94a3b8;
+            --surface-color: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --video-overlay: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Light Mode Variables */
+        [data-theme="light"] {
+            --bg-color: var(--white);
+            --text-color: var(--black);
+            --text-secondary: var(--gray);
+            --surface-color: var(--white);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --video-overlay: rgba(30, 64, 175, 0.7);
+
+            /* Light Mode Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--normal-size);
+            font-weight: var(--font-normal);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 320px;
+            min-height: 100vh;
+            padding-top: var(--header-height);
+            position: relative;
+        }
+
+        /* ===== BACKGROUND VIDEO ===== */
+        .hero__video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero__overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--video-overlay);
+            z-index: -1;
+            transition: background var(--transition-normal);
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: var(--z-fixed);
+            border-bottom: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+
+        [data-theme="light"] .header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav {
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav__logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 1.25rem;
+            font-weight: var(--font-bold);
+            color: var(--primary-color);
+        }
+
+        .nav__logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+            margin: 0;
+        }
+
+        .nav__link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: var(--font-medium);
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav__link:hover,
+        .nav__link.active-link {
+            color: var(--primary-color);
+        }
+
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width var(--transition-normal);
+        }
+
+        .nav__link:hover::after,
+        .nav__link.active-link::after {
+            width: 100%;
+        }
+
+        .nav__actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
+            transform: scale(1.1);
+        }
+
+        .nav__toggle {
+            display: none;
+            width: 48px;
+            height: 48px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            position: relative;
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-normal);
+            z-index: 1002;
+            box-shadow: var(--shadow-sm);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .nav__toggle:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .nav__toggle:hover span {
+            background: var(--white);
+        }
+
+        .nav__toggle span {
+            display: block;
+            width: 22px;
+            height: 3px;
+            background: var(--text-color);
+            transition: all var(--transition-normal);
+            border-radius: 2px;
+            transform-origin: center;
+        }
+
+        .nav__toggle.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .nav__toggle.active span {
+            background: var(--white);
+        }
+
+        .nav__toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(0, 7px);
+        }
+
+        .nav__toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .nav__toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(0, -7px);
+        }
+
+        .nav__close {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: var(--surface-color);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav__close:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: rotate(90deg) scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        .nav__menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .page-header h1 {
+            font-size: var(--h1-size);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .main-content {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        [data-theme="light"] .main-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: var(--spacing-xl);
+            gap: var(--spacing-sm);
+        }
+
+        .tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: var(--font-medium);
+            border-bottom: 3px solid transparent;
+            transition: all var(--transition-normal);
+            color: var(--text-color);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: var(--light-gray);
+            color: var(--primary-color);
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background: var(--light-gray);
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width var(--transition-normal);
+        }
+
+        .tab:hover::after,
+        .tab.active::after {
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-section {
+            background: rgba(0, 0, 0, 0.02);
+            border: 3px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            margin-bottom: var(--spacing-xl);
+            backdrop-filter: blur(5px);
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .upload-section.dragover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: var(--font-semibold);
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: var(--normal-size);
+            transition: all var(--transition-normal);
+            background: var(--surface-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-semibold);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            font-size: var(--normal-size);
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+            justify-content: center;
+            font-family: var(--font-family);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .datasets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .dataset-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dataset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .dataset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .dataset-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .dataset-title {
+            font-size: 1.2rem;
+            font-weight: var(--font-semibold);
+            color: var(--text-color);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .dataset-source {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            font-size: var(--small-size);
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-medium);
+        }
+
+        .dataset-status {
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: var(--small-size);
+            font-weight: var(--font-semibold);
+            margin-left: auto;
+        }
+
+        .status-uploaded {
+            background: #ffd700;
+            color: #8b6914;
+        }
+
+        .status-processing {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .status-processed {
+            background: var(--accent-green);
+            color: var(--white);
+        }
+
+        .status-failed {
+            background: #e53e3e;
+            color: var(--white);
+        }
+
+        .dataset-info {
+            margin-bottom: 15px;
+        }
+
+        .dataset-info div {
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+        }
+
+        .dataset-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .stat-card {
+            background: var(--gradient-ocean);
+            color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: var(--font-bold);
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: var(--normal-size);
+            opacity: 0.9;
+            font-weight: var(--font-medium);
+        }
+
+        .search-section {
+            background: rgba(0, 0, 0, 0.02);
+            backdrop-filter: blur(5px);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: var(--spacing-md);
+            align-items: end;
+        }
+
+        .results-section {
+            margin-top: var(--spacing-lg);
+        }
+
+        .result-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .result-title {
+            font-weight: var(--font-semibold);
+            color: var(--text-color);
+        }
+
+        .result-source {
+            font-size: var(--small-size);
+            color: var(--primary-color);
+            font-weight: var(--font-medium);
+        }
+
+        .result-info {
+            color: var(--text-secondary);
+            font-size: var(--small-size);
+            line-height: 1.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: var(--spacing-2xl);
+            color: var(--text-secondary);
+        }
+
+        .error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-top: var(--spacing-sm);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width var(--transition-normal);
+        }
+
+        /* ===== MOBILE RESPONSIVE DESIGN ===== */
+        @media screen and (max-width: 1024px) {
+            .container {
+                padding: 0 var(--spacing-lg);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            :root {
+                --h1-size: 2.8rem;
+                --h2-size: 2.2rem;
+                --h3-size: 1.8rem;
+                --h4-size: 1.4rem;
+                --spacing-3xl: 4rem;
+                --spacing-2xl: 3rem;
+                --spacing-xl: 2.5rem;
+            }
+
+            .container {
+                padding: 0 clamp(1rem, 4vw, 2rem);
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .nav__actions {
+                gap: var(--spacing-sm);
+            }
+
+            .theme-toggle {
+                padding: var(--spacing-sm);
+                font-size: 1.1rem;
+            }
+
+            .nav__menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-color);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: left var(--transition-normal);
+                z-index: 1001;
+                border-right: 1px solid var(--border-color);
+            }
+
+            .nav__menu.show-menu {
+                left: 0;
+            }
+
+            .nav__list {
+                flex-direction: column;
+                gap: var(--spacing-xl);
+                text-align: center;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .nav__link {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: var(--spacing-md);
+                font-size: 1.2rem;
+                padding: var(--spacing-lg) var(--spacing-xl);
+                border-radius: var(--radius-lg);
+                transition: all var(--transition-normal);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border-color);
+                width: 100%;
+                text-align: left;
+            }
+
+            .nav__link i {
+                font-size: 1.3rem;
+                width: 24px;
+                text-align: center;
+                color: var(--primary-color);
+            }
+
+            .nav__link span {
+                font-weight: var(--font-medium);
+            }
+
+            .nav__link:hover {
+                background: var(--border-color);
+            }
+
+            .nav__close {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                font-size: 1.2rem;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1002;
+            }
+
+            .nav__toggle {
+                display: flex !important;
+                position: relative;
+                z-index: 1003;
+                pointer-events: auto;
+            }
+
+            .nav__close {
+                display: flex;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: clamp(2rem, 5vw, 2.8rem);
+                flex-direction: column;
+                gap: var(--spacing-xs);
+            }
+
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+                gap: var(--spacing-xs);
+            }
+
+            .tab {
+                padding: var(--spacing-sm) var(--spacing-md);
+                font-size: var(--normal-size);
+            }
+
+            .dataset-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+
+            .main-content {
+                padding: var(--spacing-md);
+            }
+
+            .upload-section {
+                padding: var(--spacing-xl);
+            }
+
+            .statistics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: var(--spacing-sm) var(--spacing-md);
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video class="hero__video" autoplay muted loop>
+        <source src="assets/bgs.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="hero__overlay"></div>
+
+    <!-- Header and Navigation -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <i class="fas fa-wave-square"></i>
+                <span>OCERA Data Portal</span>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#upload" class="nav__link active-link">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Upload</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#manage" class="nav__link">
+                            <i class="fas fa-database"></i>
+                            <span>Manage</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#search" class="nav__link">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#analytics" class="nav__link">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <i class="fas fa-times nav__close" id="nav-close"></i>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-wave-square"></i> Data Ingestion Portal</h1>
+            <p>Upload and manage marine species datasets from NOAA and OBIS</p>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('upload')">Upload Dataset</button>
+                <button class="tab" onclick="switchTab('manage')">Manage Datasets</button>
+                <button class="tab" onclick="switchTab('search')">Search Data</button>
+                <button class="tab" onclick="switchTab('analytics')">Analytics</button>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="upload" class="tab-content active">
+                <div id="upload-messages"></div>
+
+                <div class="upload-section" onclick="document.getElementById('datasetFile').click()"
+                    ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3>Drop your dataset file here or click to browse</h3>
+                    <p>Supports CSV and JSON files up to 50MB</p>
+                    <p><strong>Supported sources:</strong> NOAA, OBIS, Custom datasets</p>
+                </div>
+
+                <form id="uploadForm" style="display: none;">
+                    <input type="file" id="datasetFile" accept=".csv,.json" onchange="handleFileSelect(event)"
+                        style="display: none;">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="datasetName">Dataset Name *</label>
+                            <input type="text" id="datasetName" required
+                                placeholder="Enter a descriptive name for your dataset">
+                        </div>
+                        <div class="form-group">
+                            <label for="datasetSource">Source *</label>
+                            <select id="datasetSource" required>
+                                <option value="">Select source</option>
+                                <option value="NOAA">NOAA</option>
+                                <option value="OBIS">OBIS</option>
+                                <option value="Custom">Custom</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datasetDescription">Description (optional)</label>
+                        <textarea id="datasetDescription" rows="3"
+                            placeholder="Describe the contents and purpose of this dataset"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <strong>Selected File:</strong> <span id="selectedFileName">None</span><br>
+                        <small>Format: <span id="selectedFileFormat">-</span> | Size: <span
+                                id="selectedFileSize">-</span></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Upload Dataset</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+
+                    <div id="uploadProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <p style="text-align: center; margin-top: 10px;">Processing dataset...</p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Manage Tab -->
+            <div id="manage" class="tab-content">
+                <div class="form-row" style="margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>Filter by Source</label>
+                        <select id="manageSourceFilter" onchange="loadDatasets()">
+                            <option value="">All Sources</option>
+                            <option value="NOAA">NOAA</option>
+                            <option value="OBIS">OBIS</option>
+                            <option value="Custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Filter by Status</label>
+                        <select id="manageStatusFilter" onchange="loadDatasets()">
+                            <option value="">All Status</option>
+                            <option value="uploaded">Uploaded</option>
+                            <option value="processing">Processing</option>
+                            <option value="processed">Processed</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="loadDatasets()">Refresh</button>
+
+                <div id="datasetsContainer" class="datasets-grid">
+                    <div class="loading">Loading datasets...</div>
+                </div>
+            </div>
+
+            <!-- Search Tab -->
+            <div id="search" class="tab-content">
+                <div class="search-section">
+                    <div class="search-row">
+                        <div class="form-group">
+                            <label for="searchQuery">Search Query</label>
+                            <input type="text" id="searchQuery"
+                                placeholder="Search species names, habitats, locations...">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchSource">Source</label>
+                            <select id="searchSource">
+                                <option value="">All Sources</option>
+                                <option value="NOAA">NOAA</option>
+                                <option value="OBIS">OBIS</option>
+                                <option value="Custom">Custom</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="performSearch()">Search</button>
+                        <button class="btn btn-secondary" onclick="clearSearch()">Clear</button>
+                    </div>
+                </div>
+
+                <div id="searchResults" class="results-section">
+                    <p>Enter a search term above to search across all datasets.</p>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content">
+                <div id="statisticsContainer">
+                    <div class="loading">Loading analytics...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedFile = null;
+        let currentDatasets = [];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function () {
+            loadDatasets();
+            loadAnalytics();
+        });
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+
+            // Load data if needed
+            if (tabName === 'manage') {
+                loadDatasets();
+            } else if (tabName === 'analytics') {
+                loadAnalytics();
+            }
+        }
+
+        // File upload handling
+        function handleDrop(event) {
+            event.preventDefault();
+            event.target.classList.remove('dragover');
+
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (validateFile(file)) {
+                    selectedFile = file;
+                    updateFileInfo(file);
+                    showUploadForm();
+                }
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.target.classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.target.classList.remove('dragover');
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && validateFile(file)) {
+                selectedFile = file;
+                updateFileInfo(file);
+                showUploadForm();
+            }
+        }
+
+        function validateFile(file) {
+            const allowedTypes = ['text/csv', 'application/json'];
+            const allowedExtensions = ['.csv', '.json'];
+
+            if (!allowedTypes.includes(file.type) && !allowedExtensions.some(ext => file.name.toLowerCase().endsWith(ext))) {
+                showMessage('error', 'Please select a CSV or JSON file.');
+                return false;
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                showMessage('error', 'File size must be less than 50MB.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function updateFileInfo(file) {
+            document.getElementById('selectedFileName').textContent = file.name;
+            document.getElementById('selectedFileFormat').textContent = file.name.toLowerCase().endsWith('.csv') ? 'CSV' : 'JSON';
+            document.getElementById('selectedFileSize').textContent = formatFileSize(file.size);
+        }
+
+        function showUploadForm() {
+            document.getElementById('uploadForm').style.display = 'block';
+        }
+
+        function resetForm() {
+            document.getElementById('uploadForm').style.display = 'none';
+            document.getElementById('uploadForm').reset();
+            document.getElementById('datasetFile').value = '';
+            selectedFile = null;
+            document.getElementById('selectedFileName').textContent = 'None';
+            document.getElementById('selectedFileFormat').textContent = '-';
+            document.getElementById('selectedFileSize').textContent = '-';
+            hideUploadProgress();
+        }
+
+        // Form submission
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            if (!selectedFile) {
+                showMessage('error', 'Please select a file to upload.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('dataset', selectedFile);
+            formData.append('name', document.getElementById('datasetName').value);
+            formData.append('source', document.getElementById('datasetSource').value);
+            formData.append('description', document.getElementById('datasetDescription').value);
+
+            showUploadProgress();
+
+            try {
+                const response = await fetch('/api/datasets/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('success', 'Dataset uploaded successfully! Processing started.');
+                    resetForm();
+                    // Auto-switch to manage tab to see the new dataset
+                    setTimeout(() => {
+                        switchTab('manage');
+                        document.querySelector('[onclick="switchTab(\'manage\')"]').click();
+                    }, 2000);
+                } else {
+                    showMessage('error', result.error || 'Upload failed');
+                }
+            } catch (error) {
+                showMessage('error', 'Upload failed: ' + error.message);
+            } finally {
+                hideUploadProgress();
+            }
+        });
+
+        function showUploadProgress() {
+            document.getElementById('uploadProgress').style.display = 'block';
+            document.querySelector('#uploadForm button[type="submit"]').disabled = true;
+        }
+
+        function hideUploadProgress() {
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.querySelector('#uploadForm button[type="submit"]').disabled = false;
+        }
+
+        // Dataset management
+        async function loadDatasets() {
+            const container = document.getElementById('datasetsContainer');
+            container.innerHTML = '<div class="loading">Loading datasets...</div>';
+
+            try {
+                const sourceFilter = document.getElementById('manageSourceFilter').value;
+                const statusFilter = document.getElementById('manageStatusFilter').value;
+
+                let url = '/api/datasets?';
+                if (sourceFilter) url += `source=${sourceFilter}&`;
+                if (statusFilter) url += `status=${statusFilter}&`;
+
+                const response = await fetch(url);
+                const datasets = await response.json();
+
+                if (response.ok) {
+                    currentDatasets = datasets;
+                    renderDatasets(datasets);
+                } else {
+                    container.innerHTML = `<div class="error">Failed to load datasets: ${datasets.error}</div>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="error">Failed to load datasets: ${error.message}</div>`;
+            }
+        }
+
+        function renderDatasets(datasets) {
+            const container = document.getElementById('datasetsContainer');
+
+            if (datasets.length === 0) {
+                container.innerHTML = '<div class="loading">No datasets found. Upload your first dataset!</div>';
+                return;
+            }
+
+            container.innerHTML = datasets.map(dataset => `
+                <div class="dataset-card">
+                    <div class="dataset-header">
+                        <div>
+                            <div class="dataset-title">${dataset.name}</div>
+                            <div class="dataset-source">${dataset.source}</div>
+                        </div>
+                        <div class="dataset-status status-${dataset.processing_status}">${dataset.processing_status}</div>
+                    </div>
+                    <div class="dataset-info">
+                        <div><strong>Format:</strong> ${dataset.format.toUpperCase()}</div>
+                        <div><strong>Records:</strong> ${dataset.records_count}</div>
+                        <div><strong>Size:</strong> ${formatFileSize(dataset.file_size)}</div>
+                        <div><strong>Uploaded:</strong> ${formatDate(dataset.upload_date)}</div>
+                        ${dataset.processed_date ? `<div><strong>Processed:</strong> ${formatDate(dataset.processed_date)}</div>` : ''}
+                        ${dataset.description ? `<div><strong>Description:</strong> ${dataset.description}</div>` : ''}
+                    </div>
+                    <div class="dataset-actions">
+                        <button class="btn btn-primary" onclick="viewDataset(${dataset.id})">View</button>
+                        <button class="btn btn-secondary" onclick="exportDataset(${dataset.id}, '${dataset.name}')">Export</button>
+                        <button class="btn btn-secondary" onclick="viewLogs(${dataset.id})">Logs</button>
+                        <button class="btn btn-danger" onclick="deleteDataset(${dataset.id}, '${dataset.name}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function viewDataset(datasetId) {
+            try {
+                const response = await fetch(`/api/datasets/${datasetId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Create a modal or new section to show dataset details
+                    alert(`Dataset: ${data.dataset.name}\nRecords: ${data.records.length}\nFirst few records:\n${JSON.stringify(data.records.slice(0, 3), null, 2)}`);
+                } else {
+                    alert('Failed to load dataset: ' + data.error);
+                }
+            } catch (error) {
+                alert('Failed to load dataset: ' + error.message);
+            }
+        }
+
+        async function exportDataset(datasetId, datasetName) {
+            const format = confirm('Export as CSV? (Cancel for JSON)') ? 'csv' : 'json';
+            const url = `/api/datasets/${datasetId}/export?format=${format}`;
+
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = `${datasetName}-export.${format}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(downloadUrl);
+                } else {
+                    const error = await response.json();
+                    alert('Export failed: ' + error.error);
+                }
+            } catch (error) {
+                alert('Export failed: ' + error.message);
+            }
+        }
+
+        async function viewLogs(datasetId) {
+            try {
+                const response = await fetch(`/api/datasets/${datasetId}/logs`);
+                const logs = await response.json();
+
+                if (response.ok) {
+                    const logText = logs.map(log =>
+                        `[${log.created_at}] ${log.log_level.toUpperCase()}: ${log.message}`
+                    ).join('\n');
+
+                    alert(`Processing Logs:\n\n${logText || 'No logs available.'}`);
+                } else {
+                    alert('Failed to load logs: ' + logs.error);
+                }
+            } catch (error) {
+                alert('Failed to load logs: ' + error.message);
+            }
+        }
+
+        async function deleteDataset(datasetId, datasetName) {
+            if (!confirm(`Are you sure you want to delete the dataset "${datasetName}"? This action cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/datasets/${datasetId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('success', 'Dataset deleted successfully.');
+                    loadDatasets();
+                } else {
+                    alert('Delete failed: ' + result.error);
+                }
+            } catch (error) {
+                alert('Delete failed: ' + error.message);
+            }
+        }
+
+        // Search functionality
+        async function performSearch() {
+            const query = document.getElementById('searchQuery').value.trim();
+            const source = document.getElementById('searchSource').value;
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (!query || query.length < 2) {
+                alert('Please enter a search query with at least 2 characters.');
+                return;
+            }
+
+            resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+
+            try {
+                let url = `/api/search?q=${encodeURIComponent(query)}`;
+                if (source) url += `&source=${source}`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (response.ok) {
+                    renderSearchResults(data);
+                } else {
+                    resultsContainer.innerHTML = `<div class="error">Search failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = `<div class="error">Search failed: ${error.message}</div>`;
+            }
+        }
+
+        function renderSearchResults(data) {
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (data.records.length === 0) {
+                resultsContainer.innerHTML = '<div class="loading">No results found for your search query.</div>';
+                return;
+            }
+
+            const resultsHTML = `
+                <div style="margin-bottom: 20px;">
+                    <strong>Found ${data.total} results for "${data.query}"</strong>
+                </div>
+                ${data.records.map(record => `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <div class="result-title">${record.species_name || record.scientific_name || 'Unknown Species'}</div>
+                            <div class="result-source">Dataset: ${record.dataset_name} (${record.dataset_source})</div>
+                        </div>
+                        <div class="result-info">
+                            ${record.scientific_name ? `<strong>Scientific Name:</strong> ${record.scientific_name}<br>` : ''}
+                            ${record.habitat ? `<strong>Habitat:</strong> ${record.habitat}<br>` : ''}
+                            ${record.distribution ? `<strong>Distribution:</strong> ${record.distribution}<br>` : ''}
+                            ${record.conservation_status ? `<strong>Status:</strong> ${record.conservation_status}<br>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+
+            resultsContainer.innerHTML = resultsHTML;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchQuery').value = '';
+            document.getElementById('searchSource').value = '';
+            document.getElementById('searchResults').innerHTML = '<p>Enter a search term above to search across all datasets.</p>';
+        }
+
+        // Analytics
+        async function loadAnalytics() {
+            const container = document.getElementById('statisticsContainer');
+            container.innerHTML = '<div class="loading">Loading analytics...</div>';
+
+            try {
+                const response = await fetch('/api/datasets/statistics');
+                const stats = await response.json();
+
+                if (response.ok) {
+                    renderAnalytics(stats);
+                } else {
+                    container.innerHTML = `<div class="error">Failed to load analytics: ${stats.error}</div>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="error">Failed to load analytics: ${error.message}</div>`;
+            }
+        }
+
+        function renderAnalytics(stats) {
+            const container = document.getElementById('statisticsContainer');
+
+            const analyticsHTML = `
+                <div class="statistics-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.totalDatasets}</div>
+                        <div class="stat-label">Total Datasets</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.totalRecords.toLocaleString()}</div>
+                        <div class="stat-label">Total Records</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.uniqueSpecies}</div>
+                        <div class="stat-label">Unique Species</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.uniqueScientificNames}</div>
+                        <div class="stat-label">Scientific Names</div>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 30px;">
+                    <div>
+                        <h3>By Source</h3>
+                        <div style="margin-top: 15px;">
+                            ${stats.bySource.map(item => `
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                                    <span>${item.source}</span>
+                                    <span><strong>${item.count}</strong></span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h3>By Status</h3>
+                        <div style="margin-top: 15px;">
+                            ${stats.byStatus.map(item => `
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                                    <span>${item.processing_status}</span>
+                                    <span><strong>${item.count}</strong></span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = analyticsHTML;
+        }
+
+        // Utility functions
+        function showMessage(type, message) {
+            const messagesContainer = document.getElementById('upload-messages');
+            messagesContainer.innerHTML = `<div class="${type}">${message}</div>`;
+
+            setTimeout(() => {
+                messagesContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString() + ' ' + new Date(dateString).toLocaleTimeString();
+        }
+
+        // Search on Enter key
+        document.getElementById('searchQuery').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Get saved theme or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeToggle.title = 'Switch to light mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeToggle.title = 'Switch to dark mode';
+            }
+        }
+
+        // ===== MOBILE NAVIGATION =====
+        const navMenu = document.getElementById('nav-menu');
+        const navToggle = document.getElementById('nav-toggle');
+        const navClose = document.getElementById('nav-close');
+        const navLinks = document.querySelectorAll('.nav__link');
+
+        // Show menu
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.add('show-menu');
+                navToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // Hide menu
+        if (navClose) {
+            navClose.addEventListener('click', () => {
+                navMenu.classList.remove('show-menu');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+
+        // Remove menu mobile
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show-menu');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // ===== ACTIVE LINK HIGHLIGHTING =====
+        function setActiveNavLink(tabName) {
+            navLinks.forEach(link => {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === `#${tabName}`) {
+                    link.classList.add('active-link');
+                }
+            });
+        }
+
+        // Update switchTab function to also update nav links
+        const originalSwitchTab = switchTab;
+        switchTab = function (tabName) {
+            originalSwitchTab.call(this, tabName);
+            setActiveNavLink(tabName);
+        };
+
+        // Handle nav link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabName = link.getAttribute('href').substring(1);
+                switchTab(tabName);
+
+                // Update tab buttons
+                document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            });
+        });
+
+        // ===== SCROLL HEADER =====
+        function scrollHeader() {
+            const header = document.getElementById('header');
+            if (this.scrollY >= 50) {
+                header.classList.add('scroll-header');
+            } else {
+                header.classList.remove('scroll-header');
+            }
+        }
+        window.addEventListener('scroll', scrollHeader);
+    </script>
+</body>
+
+</html>
